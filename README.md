@@ -1,5 +1,7 @@
-Simple Access Control List (ACL) for PHP.
-_____________________________________________________________________________________________________________________
+# Simple Access Control List (ACL) for PHP.
+
+WARNING: this is only a Maintained-Fork of "https://github.com/alexshelkov/SimpleAcl/"
+---
 #### Install
 ##### Using composer
 Add following in your composer.json:
@@ -12,7 +14,7 @@ Add following in your composer.json:
 ```
 ##### Manual
 Download library and register PSR-0 compatible autoloader.
-________________________________________________________
+---
 #### Usage
 ##### Basic usage
 ###### Theory
