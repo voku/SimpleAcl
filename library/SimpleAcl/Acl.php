@@ -191,54 +191,14 @@ class Acl
     $roles = $this->getNames($roleAggregate);
     $resources = $this->getNames($resourceAggregate);
 
-    if (
-        (
-            is_string($roleAggregate)
-            &&
-            in_array($roleAggregate, $roles, true) === false
-        )
-        ||
-        (
-            is_string($resourceAggregate)
-            &&
-            in_array($resourceAggregate, $resources, true) === false
-        )
-    ) {
-      $ruleResultCollection->add(null);
-
-      return $ruleResultCollection;
-    }
-
     foreach ($roles as $roleName) {
-
-      if (
-          is_string($roleAggregate)
-          &&
-          !$roleName instanceof RoleAggregateInterface
-          &&
-          $roleName !== $roleAggregate
-      ) {
-        continue;
-      }
-
       foreach ($resources as $resourceName) {
-
-        if (
-            is_string($resourceAggregate)
-            &&
-            !$resourceName instanceof ResourceAggregateInterface
-            &&
-            $resourceName !== $resourceAggregate
-        ) {
-          continue;
-        }
-
         foreach ($this->rules as $rule) {
 
           if (
               is_string($ruleName)
               &&
-              is_subclass_of($rule, 'SimpleAcl\Rule') === false
+              !is_subclass_of($rule, 'SimpleAcl\Rule')
               &&
               $rule->getName() !== $ruleName
           ) {
