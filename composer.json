@@ -1,26 +1,36 @@
 {
-    "name": "alexshelkov/simpleacl",
-    "license": "BSD-3-Clause",
-    "type": "library",
-    "description": "Simple Access Control List (ACL) for PHP.",
-    "keywords": ["ACL", "authorization", "permission"],
-    "homepage": "https://github.com/alexshelkov/SimpleAcl",
-    "authors": [
-        {
-            "name": "Alex Shelkovskiy",
-            "email": "alexshelkov@gmail.com",
-            "role": "Developer"
-        }
-    ],
-    "require": {
-        "php": ">=5.3.0"
+  "name": "voku/simpleacl",
+  "license": "BSD-3-Clause",
+  "type": "library",
+  "description": "Simple Access Control List (ACL) for PHP.",
+  "keywords": [
+    "ACL",
+    "authorization",
+    "permission"
+  ],
+  "homepage": "https://github.com/alexshelkov/SimpleAcl",
+  "authors": [
+    {
+      "name": "Alex Shelkovskiy",
+      "email": "alexshelkov@gmail.com",
+      "role": "Developer"
     },
-    "require-dev": {
-        "phpunit/phpunit": "4.*"
-    },
-    "autoload": {
-        "psr-0": {
-            "SimpleAcl": "library/"
-        }
+    {
+      "name": "Lars Moelleken",
+      "email": "lars@moelleken.org",
+      "homepage": "https://github.com/voku",
+      "role": "Developer"
     }
+  ],
+  "require": {
+    "php": ">=5.3.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "4.*"
+  },
+  "autoload": {
+    "psr-0": {
+      "SimpleAcl": "src/"
+    }
+  }
 }

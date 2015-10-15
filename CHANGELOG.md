@@ -1,3 +1,13 @@
+2.0.x
+
+    - fixed code-style | Thx @ PHPStorm ;-)
+    - fixed performance issue
+    - added missing php-docs
+    - added typ-hinting comments
+    - added .gitattributes (don't fetch everything via composer)
+    - renamed "library" -> "src"
+    - renamed composer-package "alexshelkov/simpleacl" -> "voku/simpleacl"
+
 2.0.23
     
     - Made all string equality check strict 

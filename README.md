@@ -1,7 +1,4 @@
 Simple Access Control List (ACL) for PHP.
-
-[![Build Status](https://secure.travis-ci.org/alexshelkov/SimpleAcl.png)](http://travis-ci.org/alexshelkov/SimpleAcl)
-[![Coverage Status](https://coveralls.io/repos/alexshelkov/SimpleAcl/badge.svg?branch=master&service=github)](https://coveralls.io/github/alexshelkov/SimpleAcl?branch=master)
 _____________________________________________________________________________________________________________________
 #### Install
 ##### Using composer
@@ -9,7 +6,7 @@ Add following in your composer.json:
 ```json
 {
     "require": {
-        "alexshelkov/simpleacl": "2.*"
+        "voku/simpleacl": "2.*"
     }
 }
 ```
