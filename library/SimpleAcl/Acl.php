@@ -1,6 +1,7 @@
 <?php
 namespace SimpleAcl;
 
+use MathAnyRoleAndActAsWide;
 use SimpleAcl\Role;
 use SimpleAcl\Resource;
 use SimpleAcl\Rule;
@@ -240,7 +241,7 @@ class Acl
                     if (
                         is_string($ruleName)
                         &&
-                        !$rule instanceof RuleWide
+                        is_subclass_of($rule, 'SimpleAcl\Rule') === false
                         &&
                         $rule->getName() !== $ruleName
                     ) {
