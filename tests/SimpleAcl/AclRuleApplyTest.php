@@ -573,13 +573,14 @@ class AclRuleApplyTest extends PHPUnit_Framework_TestCase
     $acl->addRule($user, $resource, $view4, false);
 
     $testReturnResult(
-        $acl->isAllowedReturnResult('User', 'Page', 'View'), array(
-        $view4,
-        $view3,
-        $view2,
-        $view1,
-        $view,
-    )
+        $acl->isAllowedReturnResult('User', 'Page', 'View'),
+        array(
+            $view4,
+            $view3,
+            $view2,
+            $view1,
+            $view,
+        )
     );
   }
 
@@ -1217,5 +1218,37 @@ class AclRuleApplyTest extends PHPUnit_Framework_TestCase
     $this->assertFalse($acl->isAllowed('U3', 'R3', 'View'));
     $this->assertFalse($acl->isAllowed('U3', 'R4', 'View'));
     $this->assertFalse($acl->isAllowed('U3', 'R5', 'View'));
+  }
+
+  public function testCustomRule()
+  {
+    require_once __DIR__ . '/../Stubs/CustomRule.php';
+    // must match any role and act as wide
+    $acl = new Acl();
+    $rule = new \MathAnyRoleAndActAsWide('MathAnyRoleAndActAsWide');
+    $u = new Role('U');
+    $r = new Resource('R');
+    $acl->addRule($u, $r, $rule, true);
+    $this->assertTrue($acl->isAllowed('U', 'R', 'ShouldActAsWide'));
+    $this->assertTrue($acl->isAllowed('U1', 'R', 'ShouldActAsWide'), 'Must work with any role');
+    $this->assertFalse($acl->isAllowed('U', 'R1', 'ShouldActAsWide'));
+    $this->assertFalse($acl->isAllowed('U1', 'R1', 'MathAnyRoleAndActAsWide'));
+    // must match any resource and act as wide
+    $acl = new Acl();
+    $rule = new \MathAnyResourceAndActAsWide('MathAnyResourceAndActAsWide');
+    $u = new Role('U');
+    $r = new Resource('R');
+    $acl->addRule($u, $r, $rule, true);
+    $this->assertTrue($acl->isAllowed('U', 'R', 'ShouldActAsWide'));
+    $this->assertTrue($acl->isAllowed('U', 'R1', 'ShouldActAsWide'), 'Must work with any resource');
+    $this->assertFalse($acl->isAllowed('U1', 'R', 'ShouldActAsWide'));
+    $this->assertFalse($acl->isAllowed('U1', 'R1', 'MathAnyResourceAndActAsWide'));
+    // must match anything
+    $acl = new Acl();
+    $rule = new \MatchAnything('MathAnything');
+    $u = new Role('U');
+    $r = new Resource('R');
+    $acl->addRule($u, $r, $rule, true);
+    $this->assertTrue($acl->isAllowed('anything', 'anything', 'anything'));
   }
 }
