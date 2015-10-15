@@ -238,7 +238,7 @@ class Acl
           if (
               is_string($ruleName)
               &&
-              !$rule instanceof RuleWide
+              is_subclass_of($rule, 'SimpleAcl\Rule') === false
               &&
               $rule->getName() !== $ruleName
           ) {
