@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/voku/SimpleAcl.svg?branch=master)](https://travis-ci.org/voku/SimpleAcli)
+[![Build Status](https://travis-ci.org/voku/SimpleAcl.svg?branch=master)](https://travis-ci.org/voku/SimpleAcl)
 [![Coverage Status](https://coveralls.io/repos/github/voku/SimpleAcl/badge.svg?branch=master)](https://coveralls.io/github/voku/SimpleAcl?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/voku/SimpleAcl/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/voku/SimpleAcl/?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/d436d991108448468c8854c77f62ae0c)](https://www.codacy.com/app/voku/SimpleAcl)
