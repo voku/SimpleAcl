@@ -1,8 +1,6 @@
 <?php
 namespace SimpleAcl\Resource;
 
-use SimpleAcl\Resource;
-
 /**
  * Interface ResourceAggregateInterface
  *
