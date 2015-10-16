@@ -150,9 +150,13 @@ class Acl
    */
   public function hasRule($needRule)
   {
-    foreach ($this->rules as $rule) {
-      $needRuleId = ($needRule instanceof Rule) ? $needRule->getId() : $needRule;
+    if ($needRule instanceof Rule) {
+      $needRuleId = $needRule->getId();
+    } else {
+      $needRuleId = $needRule;
+    }
 
+    foreach ($this->rules as $rule) {
       if ($rule->getId() === $needRuleId) {
         return $rule;
       }
