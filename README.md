@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/voku/SimpleAcl.svg?branch=master)](https://travis-ci.org/voku/SimpleAcl)
-[![Coverage Status](https://coveralls.io/repos/voku/SimpleAcl/badge.svg?branch=master&service=github)](https://coveralls.io/github/voku/SimpleAcl?branch=master)
+[![codecov.io](https://codecov.io/github/voku/SimpleAcl/coverage.svg?branch=master)](https://codecov.io/github/voku/SimpleAcl?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/voku/SimpleAcl/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/voku/SimpleAcl/?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/d436d991108448468c8854c77f62ae0c)](https://www.codacy.com/app/voku/SimpleAcl)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/3d1a775e-017b-4a35-9776-84679317e807/mini.png)](https://insight.sensiolabs.com/projects/3d1a775e-017b-4a35-9776-84679317e807)
