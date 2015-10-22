@@ -55,7 +55,7 @@ class ResourceAggregate extends ObjectAggregate implements ResourceAggregateInte
   /**
    * Return all resources.
    *
-   * @return array()|Resource[]
+   * @return array|Resource[]
    */
   public function getResources()
   {
