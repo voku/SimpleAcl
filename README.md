@@ -3,8 +3,7 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/voku/SimpleAcl/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/voku/SimpleAcl/?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/d436d991108448468c8854c77f62ae0c)](https://www.codacy.com/app/voku/SimpleAcl)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/3d1a775e-017b-4a35-9776-84679317e807/mini.png)](https://insight.sensiolabs.com/projects/3d1a775e-017b-4a35-9776-84679317e807)
-[![Total Downloads](https://poser.pugx.org/voku/SimpleAcl/downloads)](https://packagist.org/packages/voku/SimpleAcl)
-[![License](https://poser.pugx.org/voku/SimpleAcl/license.svg)](https://packagist.org/packages/voku/SimpleAcl)
+[![Latest Stable Version](https://poser.pugx.org/voku/simpleacl/v/stable)](https://packagist.org/packages/voku/simpleacl) [![Total Downloads](https://poser.pugx.org/voku/simpleacl/downloads)](https://packagist.org/packages/voku/simpleacl) [![Latest Unstable Version](https://poser.pugx.org/voku/simpleacl/v/unstable)](https://packagist.org/packages/voku/simpleacl) [![License](https://poser.pugx.org/voku/simpleacl/license)](https://packagist.org/packages/voku/simpleacl)
 
 # Simple Access Control List (ACL) for PHP.
 
