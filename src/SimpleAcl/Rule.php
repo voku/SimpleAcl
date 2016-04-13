@@ -19,7 +19,7 @@ class Rule
    *
    * @var mixed
    */
-  protected $id;
+  public $id;
 
   /**
    * Rule priority affect the order the rule is applied.
@@ -212,9 +212,9 @@ class Rule
       }
 
       foreach ($roles as $role) {
-        foreach ($resources as $resource) {
+        $roleDepth = $role ? $roles->getDepth() : 0;
 
-          $roleDepth = $role ? $roles->getDepth() : 0;
+        foreach ($resources as $resource) {
           $resourceDepth = $resource ? $resources->getDepth() : 0;
 
           $depth = $roleDepth + $resourceDepth;
@@ -283,9 +283,9 @@ class Rule
   }
 
   /**
-   * @param \SimpleAcl\Resource|null $resource
+   * @param \SimpleAcl\Resource $resource
    */
-  public function setResource(Resource $resource = null)
+  public function setResource(\SimpleAcl\Resource $resource = null)
   {
     $this->resource = $resource;
   }
@@ -294,14 +294,14 @@ class Rule
    * Check if $role and $resource match to need role and resource.
    *
    * @param Role|null                $role
-   * @param \SimpleAcl\Resource|null $resource
+   * @param \SimpleAcl\Resource $resource
    * @param string                   $needRoleName
    * @param string                   $needResourceName
    * @param                          $priority
    *
    * @return RuleResult|null
    */
-  protected function match(Role $role = null, Resource $resource = null, $needRoleName, $needResourceName, $priority)
+  protected function match(Role $role = null, \SimpleAcl\Resource $resource = null, $needRoleName, $needResourceName, $priority)
   {
     if (
         (
@@ -345,6 +345,8 @@ class Rule
    */
   protected function generateId()
   {
-    return bin2hex(openssl_random_pseudo_bytes(10));
+    static $idCountRuleSimpleAcl = 1;
+
+    return $idCountRuleSimpleAcl++;
   }
 }

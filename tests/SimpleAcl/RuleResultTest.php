@@ -24,18 +24,18 @@ class RuleResultTest extends PHPUnit_Framework_TestCase
     $rule->setAction(true);
     $result = new RuleResult($rule, 0, 'testNeedRole', 'testNeedResource');
 
-    $this->assertSame($rule, $result->getRule());
-    $this->assertEquals('testNeedRole', $result->getNeedRoleName());
-    $this->assertEquals('testNeedResource', $result->getNeedResourceName());
-    $this->assertEquals(0, $result->getPriority());
-    $this->assertEquals($rule->getAction($result), $result->getAction());
+    self::assertSame($rule, $result->getRule());
+    self::assertEquals('testNeedRole', $result->getNeedRoleName());
+    self::assertEquals('testNeedResource', $result->getNeedResourceName());
+    self::assertEquals(0, $result->getPriority());
+    self::assertEquals($rule->getAction($result), $result->getAction());
 
     $result->setPriority(10);
-    $this->assertEquals(10, $result->getPriority());
+    self::assertEquals(10, $result->getPriority());
 
-    $this->assertSame($roleAggregate, $result->getRoleAggregate());
-    $this->assertSame($resourceAggregate, $result->getResourceAggregate());
+    self::assertSame($roleAggregate, $result->getRoleAggregate());
+    self::assertSame($resourceAggregate, $result->getResourceAggregate());
 
-    $this->assertNotEmpty($result->getId());
+    self::assertNotEmpty($result->getId());
   }
 }

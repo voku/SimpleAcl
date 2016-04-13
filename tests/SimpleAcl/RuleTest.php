@@ -17,9 +17,9 @@ class RuleTest extends PHPUnit_Framework_TestCase
   public function testName()
   {
     $rule = new Rule('Rule');
-    $this->assertEquals($rule->getName(), 'Rule');
+    self::assertEquals($rule->getName(), 'Rule');
     $rule->setName('NewRuleName');
-    $this->assertEquals($rule->getName(), 'NewRuleName');
+    self::assertEquals($rule->getName(), 'NewRuleName');
   }
 
   public function testAction()
@@ -28,25 +28,25 @@ class RuleTest extends PHPUnit_Framework_TestCase
     $ruleResult = new RuleResult($rule, 0, 'testNeedRoleName', 'testNeedResourceName');
 
     $rule->setAction(true);
-    $this->assertTrue($rule->getAction($ruleResult));
-    $this->assertTrue($rule->getAction());
+    self::assertTrue($rule->getAction($ruleResult));
+    self::assertTrue($rule->getAction());
 
     $rule->setAction(false);
-    $this->assertFalse($rule->getAction($ruleResult));
-    $this->assertFalse($rule->getAction());
+    self::assertFalse($rule->getAction($ruleResult));
+    self::assertFalse($rule->getAction());
 
     // Action can be mixed, but getAction must return bool
     $a = array();
     $rule->setAction($a);
-    $this->assertFalse($rule->getAction($ruleResult));
-    $this->assertFalse($rule->getAction());
-    $this->assertAttributeEquals($a, 'action', $rule);
+    self::assertFalse($rule->getAction($ruleResult));
+    self::assertFalse($rule->getAction());
+    self::assertAttributeEquals($a, 'action', $rule);
 
     $a = array(1, 2, 3);
     $rule->setAction($a);
-    $this->assertTrue($rule->getAction($ruleResult));
-    $this->assertTrue($rule->getAction());
-    $this->assertAttributeEquals($a, 'action', $rule);
+    self::assertTrue($rule->getAction($ruleResult));
+    self::assertTrue($rule->getAction());
+    self::assertAttributeEquals($a, 'action', $rule);
   }
 
   public function testRolesAndResources()
@@ -55,18 +55,18 @@ class RuleTest extends PHPUnit_Framework_TestCase
 
     $role = new Role('Role');
     $rule->setRole($role);
-    $this->assertSame($rule->getRole(), $role);
+    self::assertSame($rule->getRole(), $role);
 
     $resource = new Resource('Resource');
     $rule->setResource($resource);
-    $this->assertSame($rule->getResource(), $resource);
+    self::assertSame($rule->getResource(), $resource);
   }
 
   public function testId()
   {
     $rule = new Rule('Rule');
 
-    $this->assertNotNull($rule->getId());
+    self::assertNotNull($rule->getId());
   }
 
   public function testActionCallableWithNullRuleResult()
@@ -85,11 +85,11 @@ class RuleTest extends PHPUnit_Framework_TestCase
         }
     );
 
-    $this->assertTrue($rule->getAction());
-    $this->assertFalse($isCalled);
+    self::assertTrue($rule->getAction());
+    self::assertFalse($isCalled);
 
-    $this->assertFalse($rule->getAction($ruleResult));
-    $this->assertTrue($isCalled);
+    self::assertFalse($rule->getAction($ruleResult));
+    self::assertTrue($isCalled);
   }
 
   public function testActionCallable()
@@ -103,37 +103,37 @@ class RuleTest extends PHPUnit_Framework_TestCase
     $rule->setAction(
         function (RuleResult $r) use (&$isCalled, $self) {
           $isCalled = true;
-          $self->assertEquals('testNeedRoleName', $r->getNeedRoleName());
-          $self->assertEquals('testNeedResourceName', $r->getNeedResourceName());
-          $self->assertEquals(0, $r->getPriority());
+          $self::assertEquals('testNeedRoleName', $r->getNeedRoleName());
+          $self::assertEquals('testNeedResourceName', $r->getNeedResourceName());
+          $self::assertEquals(0, $r->getPriority());
 
           return true;
         }
     );
 
-    $this->assertTrue($rule->getAction($ruleResult));
+    self::assertTrue($rule->getAction($ruleResult));
 
-    $this->assertTrue($isCalled);
+    self::assertTrue($isCalled);
   }
 
   public function testNullRoleOrResource()
   {
     $rule = new Rule('Rule');
 
-    $this->assertNull($rule->isAllowed('NotMatchedRule', 'Role', 'Resource'));
-    $this->assertInstanceOf('SimpleAcl\RuleResult', $rule->isAllowed('Rule', 'Role', 'Resource'));
+    self::assertNull($rule->isAllowed('NotMatchedRule', 'Role', 'Resource'));
+    self::assertInstanceOf('SimpleAcl\RuleResult', $rule->isAllowed('Rule', 'Role', 'Resource'));
 
     $rule = new Rule('Rule');
     $rule->setRole(new Role('Role'));
 
-    $this->assertNull($rule->isAllowed('Rule', 'NotMatchedRole', 'Resource'));
-    $this->assertInstanceOf('SimpleAcl\RuleResult', $rule->isAllowed('Rule', 'Role', 'Resource'));
+    self::assertNull($rule->isAllowed('Rule', 'NotMatchedRole', 'Resource'));
+    self::assertInstanceOf('SimpleAcl\RuleResult', $rule->isAllowed('Rule', 'Role', 'Resource'));
 
     $rule = new Rule('Rule');
     $rule->setResource(new Resource('Resource'));
 
-    $this->assertNull($rule->isAllowed('Rule', 'Role', 'NotMatchedResource'));
-    $this->assertInstanceOf('SimpleAcl\RuleResult', $rule->isAllowed('Rule', 'Role', 'Resource'));
+    self::assertNull($rule->isAllowed('Rule', 'Role', 'NotMatchedResource'));
+    self::assertInstanceOf('SimpleAcl\RuleResult', $rule->isAllowed('Rule', 'Role', 'Resource'));
 
   }
 }

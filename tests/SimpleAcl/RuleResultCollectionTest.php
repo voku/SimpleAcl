@@ -16,8 +16,8 @@ class RuleResultCollectionTest extends PHPUnit_Framework_TestCase
   public function testEmpty()
   {
     $collection = new RuleResultCollection();
-    $this->assertFalse($collection->any());
-    $this->assertFalse($collection->get());
+    self::assertFalse($collection->any());
+    self::assertFalse($collection->get());
   }
 
   public function testAddNull()
@@ -26,8 +26,8 @@ class RuleResultCollectionTest extends PHPUnit_Framework_TestCase
 
     $collection->add(null);
 
-    $this->assertFalse($collection->any());
-    $this->assertFalse($collection->get());
+    self::assertFalse($collection->any());
+    self::assertFalse($collection->get());
   }
 
   public function testAdd()
@@ -39,15 +39,15 @@ class RuleResultCollectionTest extends PHPUnit_Framework_TestCase
 
     $collection->add($result);
 
-    $this->assertTrue($collection->any());
-    $this->assertSame($result->getAction(), $collection->get());
+    self::assertTrue($collection->any());
+    self::assertSame($result->getAction(), $collection->get());
 
     $index = 0;
     foreach ($collection as $r) {
-      $this->assertSame($result, $r);
+      self::assertSame($result, $r);
       $index++;
     }
-    $this->assertEquals(1, $index);
+    self::assertEquals(1, $index);
   }
 
   public function testMultipleAdd()
@@ -63,16 +63,16 @@ class RuleResultCollectionTest extends PHPUnit_Framework_TestCase
     $collection->add($result);
     $collection->add($result2);
 
-    $this->assertTrue($collection->any());
+    self::assertTrue($collection->any());
 
     $results = array($result2, $result);
 
     $index = 0;
     foreach ($collection as $r) {
-      $this->assertSame($results[$index], $r);
+      self::assertSame($results[$index], $r);
       $index++;
     }
-    $this->assertEquals(2, $index);
+    self::assertEquals(2, $index);
   }
 
   public function testResultWithNullAction()
@@ -88,9 +88,9 @@ class RuleResultCollectionTest extends PHPUnit_Framework_TestCase
     $result2 = new RuleResult($rule2, 0, 'testNeedRole', 'testNeedResource');
 
     $collection->add($result);
-    $this->assertFalse($collection->get());
+    self::assertFalse($collection->get());
 
     $collection->add($result2);
-    $this->assertTrue($collection->get());
+    self::assertTrue($collection->get());
   }
 }

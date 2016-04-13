@@ -42,10 +42,10 @@ class Acl
    * addRule($role, $resource, $rule)
    * addRule($role, $resource, $rule, $action)
    *
-   * @param Role        ...$role
-   * @param Resource    ...$resource
-   * @param Rule|string ...$rule
-   * @param mixed       ...$action
+   * @param Role     ..$role
+   * @param Resource ..$resource
+   * @param Rule|string ..$rule
+   * @param mixed    ..$action
    *
    * @throws InvalidArgumentException
    */
@@ -63,6 +63,7 @@ class Acl
       $role = $args[0];
       $resource = $args[1];
       $rule = $args[2];
+
       if ($argsCount == 4) {
         $action = $args[3];
       }
@@ -78,11 +79,19 @@ class Acl
       throw new InvalidArgumentException(__METHOD__ . ' accepts only one, tow, three or four arguments');
     }
 
-    if (null !== ($role) && !$role instanceof Role) {
+    if (
+        null !== $role
+        &&
+        !$role instanceof Role
+    ) {
       throw new InvalidArgumentException('Role must be an instance of SimpleAcl\Role or null');
     }
 
-    if (null !== ($resource) && !$resource instanceof Resource) {
+    if (
+        null !== $resource
+        &&
+        !$resource instanceof Resource
+    ) {
       throw new InvalidArgumentException('Resource must be an instance of SimpleAcl\Resource or null');
     }
 
@@ -134,7 +143,11 @@ class Acl
       throw new RuntimeException('Rule class not exist');
     }
 
-    if (!is_subclass_of($ruleClass, 'SimpleAcl\Rule') && $ruleClass != 'SimpleAcl\Rule') {
+    if (
+        $ruleClass != 'SimpleAcl\Rule'
+        &&
+        !is_subclass_of($ruleClass, 'SimpleAcl\Rule')
+    ) {
       throw new RuntimeException('Rule class must be instance of SimpleAcl\Rule');
     }
 
@@ -151,13 +164,13 @@ class Acl
   public function hasRule($needRule)
   {
     if ($needRule instanceof Rule) {
-      $needRuleId = $needRule->getId();
+      $needRuleId = $needRule->id;
     } else {
       $needRuleId = $needRule;
     }
 
     foreach ($this->rules as $rule) {
-      if ($rule->getId() === $needRuleId) {
+      if ($rule->id === $needRuleId) {
         return $rule;
       }
     }
@@ -265,24 +278,27 @@ class Acl
 
     foreach ($this->rules as $ruleIndex => $rule) {
       if (
-          $ruleName === null
-          ||
           (
-              $ruleName !== null
-              &&
-              $ruleName === $rule->getName()
+              $ruleName === null
+              ||
+              (
+                  $ruleName !== null
+                  &&
+                  $ruleName === $rule->getName()
+              )
           )
-      ) {
-        if (
-            $roleName === null
-            ||
-            (
-                $roleName !== null
-                &&
-                $rule->getRole() && $rule->getRole()->getName() === $roleName
-            )
-        ) {
-          if (
+          &&
+          (
+              $roleName === null
+              ||
+              (
+                  $roleName !== null
+                  &&
+                  $rule->getRole() && $rule->getRole()->getName() === $roleName
+              )
+          )
+          &&
+          (
               $resourceName === null
               ||
               (
@@ -292,13 +308,14 @@ class Acl
                   &&
                   $rule->getResource()->getName() === $resourceName
               )
-          ) {
-            unset($this->rules[$ruleIndex]);
-            if (!$all) {
-              return;
-            }
-          }
+          )
+      ) {
+
+        unset($this->rules[$ruleIndex]);
+        if (!$all) {
+          return;
         }
+
       }
     }
   }
@@ -320,7 +337,7 @@ class Acl
   public function removeRuleById($ruleId)
   {
     foreach ($this->rules as $ruleIndex => $rule) {
-      if ($rule->getId() === $ruleId) {
+      if ($rule->id === $ruleId) {
         unset($this->rules[$ruleIndex]);
 
         return;

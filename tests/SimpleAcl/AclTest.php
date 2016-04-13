@@ -34,7 +34,7 @@ class AclTest extends PHPUnit_Framework_TestCase
     $this->setExpectedException('SimpleAcl\Exception\InvalidArgumentException', 'Role must be an instance of SimpleAcl\Role or null');
 
     $acl = new Acl;
-    $acl->addRule(new \StdClass(1), new Resource('test'), new Rule('test'), true);
+    $acl->addRule(new \stdClass(1), new Resource('test'), new Rule('test'), true);
   }
 
   public function testThrowsExceptionWhenBadResource()
@@ -42,7 +42,7 @@ class AclTest extends PHPUnit_Framework_TestCase
     $this->setExpectedException('SimpleAcl\Exception\InvalidArgumentException', 'Resource must be an instance of SimpleAcl\Resource or null');
 
     $acl = new Acl;
-    $acl->addRule(new Role('test'), new \StdClass(1), new Rule('test'), true);
+    $acl->addRule(new Role('test'), new \stdClass(1), new Rule('test'), true);
   }
 
   public function testSetRuleClassOriginal()
@@ -50,7 +50,7 @@ class AclTest extends PHPUnit_Framework_TestCase
     $acl = new Acl;
     $acl->setRuleClass('SimpleAcl\Rule');
 
-    $this->assertEquals('SimpleAcl\Rule', $acl->getRuleClass());
+    self::assertEquals('SimpleAcl\Rule', $acl->getRuleClass());
   }
 
   public function testSetRuleNotExistingClass()
@@ -60,7 +60,7 @@ class AclTest extends PHPUnit_Framework_TestCase
     $acl = new Acl;
     $acl->setRuleClass('BadClassTest');
 
-    $this->assertEquals('SimpleAcl\Rule', $acl->getRuleClass());
+    self::assertEquals('SimpleAcl\Rule', $acl->getRuleClass());
   }
 
   public function testSetRuleNotInstanceOfRuleClass()
@@ -72,7 +72,7 @@ class AclTest extends PHPUnit_Framework_TestCase
     $acl = new Acl;
     $acl->setRuleClass('NotInstanceOfRuleClass');
 
-    $this->assertEquals('SimpleAcl\Rule', $acl->getRuleClass());
+    self::assertEquals('SimpleAcl\Rule', $acl->getRuleClass());
   }
 
   public function testSetRuleClass()
@@ -82,7 +82,7 @@ class AclTest extends PHPUnit_Framework_TestCase
     $acl = new Acl;
     $acl->setRuleClass('GoodRuleClass');
 
-    $this->assertEquals('GoodRuleClass', $acl->getRuleClass());
+    self::assertEquals('GoodRuleClass', $acl->getRuleClass());
   }
 
   public function testAddSameRules()
@@ -99,42 +99,42 @@ class AclTest extends PHPUnit_Framework_TestCase
 
     $acl->addRule($user, $page, $rule, true);
 
-    $this->assertSame($rule->getRole(), $user);
-    $this->assertSame($rule->getResource(), $page);
+    self::assertSame($rule->getRole(), $user);
+    self::assertSame($rule->getResource(), $page);
 
     // If rule already exist don't add it in Acl, but change Role, Resource and Action
     $acl->addRule($superUser, $superPage, $rule, true);
 
-    $this->assertNotSame($rule->getRole(), $user);
-    $this->assertNotSame($rule->getResource(), $page);
+    self::assertNotSame($rule->getRole(), $user);
+    self::assertNotSame($rule->getResource(), $page);
 
-    $this->assertSame($rule->getRole(), $superUser);
-    $this->assertSame($rule->getResource(), $superPage);
+    self::assertSame($rule->getRole(), $superUser);
+    self::assertSame($rule->getResource(), $superPage);
 
-    $this->assertFalse($acl->isAllowed('User', 'Page', 'Edit'));
-    $this->assertTrue($acl->isAllowed('SuperUser', 'SuperPage', 'Edit'));
+    self::assertFalse($acl->isAllowed('User', 'Page', 'Edit'));
+    self::assertTrue($acl->isAllowed('SuperUser', 'SuperPage', 'Edit'));
 
     $acl->addRule($superUser, $superPage, $rule, false);
 
-    $this->assertFalse($acl->isAllowed('SuperUser', 'SuperPage', 'Edit'));
+    self::assertFalse($acl->isAllowed('SuperUser', 'SuperPage', 'Edit'));
 
-    $this->assertAttributeCount(1, 'rules', $acl);
+    self::assertAttributeCount(1, 'rules', $acl);
 
     // rule should overwrite $role, $resource and $action when they actually used in addRule
 
     $acl->addRule($superUser, $superPage, $rule);
-    $this->assertFalse($acl->isAllowed('SuperUser', 'SuperPage', 'Edit'));
-    $this->assertAttributeCount(1, 'rules', $acl);
+    self::assertFalse($acl->isAllowed('SuperUser', 'SuperPage', 'Edit'));
+    self::assertAttributeCount(1, 'rules', $acl);
 
     $acl->addRule($rule);
-    $this->assertFalse($acl->isAllowed('SuperUser', 'SuperPage', 'Edit'));
-    $this->assertSame($rule->getRole(), $superUser);
-    $this->assertSame($rule->getResource(), $superPage);
+    self::assertFalse($acl->isAllowed('SuperUser', 'SuperPage', 'Edit'));
+    self::assertSame($rule->getRole(), $superUser);
+    self::assertSame($rule->getResource(), $superPage);
 
     $acl->addRule($rule, true);
-    $this->assertTrue($acl->isAllowed('SuperUser', 'SuperPage', 'Edit'));
-    $this->assertSame($rule->getRole(), $superUser);
-    $this->assertSame($rule->getResource(), $superPage);
+    self::assertTrue($acl->isAllowed('SuperUser', 'SuperPage', 'Edit'));
+    self::assertSame($rule->getRole(), $superUser);
+    self::assertSame($rule->getResource(), $superPage);
   }
 
   public function testRemoveAllRules()
@@ -148,11 +148,11 @@ class AclTest extends PHPUnit_Framework_TestCase
     $acl->addRule($user, $resource, new Rule('Edit'), true);
     $acl->addRule($user, $resource, new Rule('Remove'), true);
 
-    $this->assertAttributeCount(3, 'rules', $acl);
+    self::assertAttributeCount(3, 'rules', $acl);
 
     $acl->removeAllRules();
 
-    $this->assertAttributeCount(0, 'rules', $acl);
+    self::assertAttributeCount(0, 'rules', $acl);
   }
 
   public function testRemoveRuleActAsRemoveAllRules()
@@ -166,11 +166,11 @@ class AclTest extends PHPUnit_Framework_TestCase
     $acl->addRule($user, $resource, new Rule('Edit'), true);
     $acl->addRule($user, $resource, new Rule('Remove'), true);
 
-    $this->assertAttributeCount(3, 'rules', $acl);
+    self::assertAttributeCount(3, 'rules', $acl);
 
     $acl->removeRule();
 
-    $this->assertAttributeCount(0, 'rules', $acl);
+    self::assertAttributeCount(0, 'rules', $acl);
   }
 
   public function testRemoveRuleNotMatch()
@@ -189,25 +189,25 @@ class AclTest extends PHPUnit_Framework_TestCase
     $acl->addRule($moderator, $blog, new Rule('Edit'), true);
     $acl->addRule($admin, $site, new Rule('Remove'), true);
 
-    $this->assertAttributeCount(3, 'rules', $acl);
+    self::assertAttributeCount(3, 'rules', $acl);
     $acl->removeRule('RoleNotMatch');
-    $this->assertAttributeCount(3, 'rules', $acl);
+    self::assertAttributeCount(3, 'rules', $acl);
 
-    $this->assertAttributeCount(3, 'rules', $acl);
+    self::assertAttributeCount(3, 'rules', $acl);
     $acl->removeRule(null, 'ResourceNotMatch');
-    $this->assertAttributeCount(3, 'rules', $acl);
+    self::assertAttributeCount(3, 'rules', $acl);
 
-    $this->assertAttributeCount(3, 'rules', $acl);
+    self::assertAttributeCount(3, 'rules', $acl);
     $acl->removeRule(null, 'ResourceNotMatch');
-    $this->assertAttributeCount(3, 'rules', $acl);
+    self::assertAttributeCount(3, 'rules', $acl);
 
-    $this->assertAttributeCount(3, 'rules', $acl);
+    self::assertAttributeCount(3, 'rules', $acl);
     $acl->removeRule(null, null, 'RuleNotMatch');
-    $this->assertAttributeCount(3, 'rules', $acl);
+    self::assertAttributeCount(3, 'rules', $acl);
 
-    $this->assertAttributeCount(3, 'rules', $acl);
+    self::assertAttributeCount(3, 'rules', $acl);
     $acl->removeRule('RoleNotMatch', 'ResourceNotMatch', 'RuleNotMatch');
-    $this->assertAttributeCount(3, 'rules', $acl);
+    self::assertAttributeCount(3, 'rules', $acl);
   }
 
   public function testRemoveRule()
@@ -227,16 +227,16 @@ class AclTest extends PHPUnit_Framework_TestCase
     $acl->addRule($user, $blog, new Rule('Edit'), true);
     $acl->addRule($user, $site, new Rule('Remove'), true);
 
-    $this->assertAttributeCount(3, 'rules', $acl);
+    self::assertAttributeCount(3, 'rules', $acl);
     $acl->removeRule('User');
-    $this->assertAttributeCount(0, 'rules', $acl);
+    self::assertAttributeCount(0, 'rules', $acl);
 
     $acl->addRule($user, $page, new Rule('View'), true);
     $acl->addRule($user, $blog, new Rule('Edit'), true);
     $acl->addRule($moderator, $site, new Rule('Remove'), true);
 
     $acl->removeRule('User');
-    $this->assertAttributeCount(1, 'rules', $acl);
+    self::assertAttributeCount(1, 'rules', $acl);
 
     $acl->removeRule();
 
@@ -245,17 +245,17 @@ class AclTest extends PHPUnit_Framework_TestCase
     $acl->addRule($moderator, $page, new Rule('Edit'), true);
     $acl->addRule($admin, $page, new Rule('Remove'), true);
 
-    $this->assertAttributeCount(3, 'rules', $acl);
+    self::assertAttributeCount(3, 'rules', $acl);
     $acl->removeRule(null, 'Page');
-    $this->assertAttributeCount(0, 'rules', $acl);
+    self::assertAttributeCount(0, 'rules', $acl);
 
     $acl->addRule($user, $page, new Rule('View'), true);
     $acl->addRule($moderator, $page, new Rule('Edit'), true);
     $acl->addRule($admin, $blog, new Rule('Remove'), true);
 
-    $this->assertAttributeCount(3, 'rules', $acl);
+    self::assertAttributeCount(3, 'rules', $acl);
     $acl->removeRule(null, 'Page');
-    $this->assertAttributeCount(1, 'rules', $acl);
+    self::assertAttributeCount(1, 'rules', $acl);
 
     $acl->removeRule();
 
@@ -264,17 +264,17 @@ class AclTest extends PHPUnit_Framework_TestCase
     $acl->addRule($moderator, $blog, new Rule('View'), true);
     $acl->addRule($admin, $site, new Rule('View'), true);
 
-    $this->assertAttributeCount(3, 'rules', $acl);
+    self::assertAttributeCount(3, 'rules', $acl);
     $acl->removeRule(null, null, 'View');
-    $this->assertAttributeCount(0, 'rules', $acl);
+    self::assertAttributeCount(0, 'rules', $acl);
 
     $acl->addRule($user, $page, new Rule('View'), true);
     $acl->addRule($moderator, $blog, new Rule('View'), true);
     $acl->addRule($admin, $site, new Rule('Edit'), true);
 
-    $this->assertAttributeCount(3, 'rules', $acl);
+    self::assertAttributeCount(3, 'rules', $acl);
     $acl->removeRule(null, null, 'View');
-    $this->assertAttributeCount(1, 'rules', $acl);
+    self::assertAttributeCount(1, 'rules', $acl);
 
     $acl->removeRule();
 
@@ -283,26 +283,26 @@ class AclTest extends PHPUnit_Framework_TestCase
     $acl->addRule($moderator, $blog, new Rule('Edit'), true);
     $acl->addRule($admin, $site, new Rule('Remove'), true);
 
-    $this->assertAttributeCount(3, 'rules', $acl);
+    self::assertAttributeCount(3, 'rules', $acl);
     $acl->removeRule('User', 'Page', 'View');
-    $this->assertAttributeCount(2, 'rules', $acl);
+    self::assertAttributeCount(2, 'rules', $acl);
     $acl->removeRule('Moderator', 'Blog', 'Edit');
-    $this->assertAttributeCount(1, 'rules', $acl);
+    self::assertAttributeCount(1, 'rules', $acl);
     $acl->removeRule('Admin', 'Site', 'Remove');
-    $this->assertAttributeCount(0, 'rules', $acl);
+    self::assertAttributeCount(0, 'rules', $acl);
 
     // Remove rules by pairs
     $acl->addRule($user, $page, new Rule('View'), true);
     $acl->addRule($moderator, $blog, new Rule('Edit'), true);
     $acl->addRule($admin, $site, new Rule('Remove'), true);
 
-    $this->assertAttributeCount(3, 'rules', $acl);
+    self::assertAttributeCount(3, 'rules', $acl);
     $acl->removeRule('User', 'Page');
-    $this->assertAttributeCount(2, 'rules', $acl);
+    self::assertAttributeCount(2, 'rules', $acl);
     $acl->removeRule('Moderator', null, 'Edit');
-    $this->assertAttributeCount(1, 'rules', $acl);
+    self::assertAttributeCount(1, 'rules', $acl);
     $acl->removeRule(null, 'Site', 'Remove');
-    $this->assertAttributeCount(0, 'rules', $acl);
+    self::assertAttributeCount(0, 'rules', $acl);
 
     $acl->removeRule();
   }
@@ -325,16 +325,16 @@ class AclTest extends PHPUnit_Framework_TestCase
 
     $acl->removeRuleById('bad_id_test');
 
-    $this->assertAttributeCount(3, 'rules', $acl);
+    self::assertAttributeCount(3, 'rules', $acl);
 
     $acl->removeRuleById($rule1->getId());
 
-    $this->assertAttributeCount(2, 'rules', $acl);
+    self::assertAttributeCount(2, 'rules', $acl);
 
     $acl->removeRuleById($rule2->getId());
     $acl->removeRuleById($rule3->getId());
 
-    $this->assertAttributeCount(0, 'rules', $acl);
+    self::assertAttributeCount(0, 'rules', $acl);
   }
 
   public function testHasRule()
@@ -352,8 +352,8 @@ class AclTest extends PHPUnit_Framework_TestCase
     $acl->addRule($user, $page, $rule1, true);
     $acl->addRule($user, $page, $rule2, true);
 
-    $this->assertSame($rule1, $acl->hasRule($rule1));
-    $this->assertSame($rule2, $acl->hasRule($rule2->getId()));
-    $this->assertFalse($acl->hasRule($rule3));
+    self::assertSame($rule1, $acl->hasRule($rule1));
+    self::assertSame($rule2, $acl->hasRule($rule2->getId()));
+    self::assertFalse($acl->hasRule($rule3));
   }
 }

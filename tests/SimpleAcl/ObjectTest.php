@@ -16,9 +16,9 @@ class ObjectTest extends PHPUnit_Framework_TestCase
     /** @var Object $object */
     $object = $this->getMockForAbstractClass('SimpleAcl\Object', array('TestName'));
 
-    $this->assertEquals($object->getName(), 'TestName');
+    self::assertEquals($object->getName(), 'TestName');
     $object->setName('NewName');
-    $this->assertEquals($object->getName(), 'NewName');
+    self::assertEquals($object->getName(), 'NewName');
   }
 
   public function testAddChild()
@@ -30,9 +30,9 @@ class ObjectTest extends PHPUnit_Framework_TestCase
 
     $parent->addChild($child);
 
-    $this->assertEquals(1, count($parent->getChildren()));
-    $this->assertSame($child, $parent->hasChild($child));
-    $this->assertSame($child, $parent->hasChild('Child'));
+    self::assertEquals(1, count($parent->getChildren()));
+    self::assertSame($child, $parent->hasChild($child));
+    self::assertSame($child, $parent->hasChild('Child'));
   }
 
   public function testRemoveChild()
@@ -42,18 +42,18 @@ class ObjectTest extends PHPUnit_Framework_TestCase
 
     $child = $this->getMockForAbstractClass('SimpleAcl\Object', array('Child'));
 
-    $this->assertFalse($parent->removeChild($child));
+    self::assertFalse($parent->removeChild($child));
 
     $parent->addChild($child);
 
-    $this->assertEquals(1, count($parent->getChildren()));
-    $this->assertSame($child, $parent->hasChild($child));
-    $this->assertSame($child, $parent->hasChild('Child'));
+    self::assertEquals(1, count($parent->getChildren()));
+    self::assertSame($child, $parent->hasChild($child));
+    self::assertSame($child, $parent->hasChild('Child'));
 
-    $this->assertTrue($parent->removeChild($child));
+    self::assertTrue($parent->removeChild($child));
 
-    $this->assertNull($parent->hasChild($child));
-    $this->assertEquals(0, count($parent->getChildren()));
+    self::assertNull($parent->hasChild($child));
+    self::assertEquals(0, count($parent->getChildren()));
   }
 
   public function testAddSameChild()
@@ -65,22 +65,22 @@ class ObjectTest extends PHPUnit_Framework_TestCase
 
     $parent->addChild($child);
 
-    $this->assertEquals(1, count($parent->getChildren()));
-    $this->assertSame($child, $parent->hasChild($child));
+    self::assertEquals(1, count($parent->getChildren()));
+    self::assertSame($child, $parent->hasChild($child));
 
     $parent->addChild($child);
-    $this->assertEquals(1, count($parent->getChildren()));
+    self::assertEquals(1, count($parent->getChildren()));
 
     $child2 = $this->getMockForAbstractClass('SimpleAcl\Object', array('Child'));
 
     $parent->addChild($child2);
 
-    $this->assertEquals(1, count($parent->getChildren()));
-    $this->assertSame($child, $parent->hasChild('Child'));
-    $this->assertSame($child, $parent->hasChild($child));
-    $this->assertSame($child, $parent->hasChild($child2));
+    self::assertEquals(1, count($parent->getChildren()));
+    self::assertSame($child, $parent->hasChild('Child'));
+    self::assertSame($child, $parent->hasChild($child));
+    self::assertSame($child, $parent->hasChild($child2));
 
-    $this->assertNotSame($child2, $parent->hasChild($child2));
+    self::assertNotSame($child2, $parent->hasChild($child2));
   }
 
   public function testGetChildren()
@@ -93,6 +93,6 @@ class ObjectTest extends PHPUnit_Framework_TestCase
     $child2 = $this->getMockForAbstractClass('SimpleAcl\Object', array('TestNameChild2'));
     $parent->addChild($child2);
 
-    $this->assertSame(array($child1, $child2), $parent->getChildren());
+    self::assertSame(array($child1, $child2), $parent->getChildren());
   }
 }

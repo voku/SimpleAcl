@@ -48,7 +48,7 @@ abstract class Object implements IteratorAggregate
    *
    * @param \SimpleAcl\Object $child
    */
-  public function addChild(Object $child)
+  public function addChild(\SimpleAcl\Object $child)
   {
     if ($this->hasChild($child)) {
       return;

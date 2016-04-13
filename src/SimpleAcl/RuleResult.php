@@ -54,7 +54,9 @@ class RuleResult
    */
   public function __construct(Rule $rule, $priority, $needRoleName, $needResourceName)
   {
-    $this->id = bin2hex(openssl_random_pseudo_bytes(10));;
+    static $idCountRuleResultSimpleAcl = 1;
+
+    $this->id = $idCountRuleResultSimpleAcl++;
     $this->rule = $rule;
     $this->priority = $priority;
     $this->needRoleName = $needRoleName;
