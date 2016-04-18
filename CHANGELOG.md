@@ -1,4 +1,8 @@
-2.0.x
+3.0.x
+
+    - removed Child Elements (because of poor performance)
+
+2.0.28
 
     - fixed code-style | Thx @ PHPStorm ;-)
     - fixed performance issue

@@ -181,7 +181,7 @@ class AclRuleApplyTest extends PHPUnit_Framework_TestCase
 
   }
 
-  public function testParentRoles()
+  public function testRoles()
   {
     $acl = new Acl;
 
@@ -189,12 +189,8 @@ class AclRuleApplyTest extends PHPUnit_Framework_TestCase
     $moderator = new Role('Moderator');
     $admin = new Role('Admin');
 
-    $admin->addChild($moderator);
-    $moderator->addChild($user);
-
     $page = new Resource('Page');
-
-    // Parent elements must NOT grant access
+    
     $acl->addRule($user, $page, new Rule('View'), true);
 
     self::assertTrue($acl->isAllowed('User', 'Page', 'View'));
@@ -202,12 +198,9 @@ class AclRuleApplyTest extends PHPUnit_Framework_TestCase
     self::assertFalse($acl->isAllowed('Admin', 'Page', 'View'));
 
     $acl = new Acl;
-
-    // Child elements must inherit access
+    
     $acl->addRule($admin, $page, new Rule('View'), true);
-
-    self::assertTrue($acl->isAllowed('User', 'Page', 'View'));
-    self::assertTrue($acl->isAllowed('Moderator', 'Page', 'View'));
+    
     self::assertTrue($acl->isAllowed('Admin', 'Page', 'View'));
 
     // but last added rules wins
@@ -219,7 +212,7 @@ class AclRuleApplyTest extends PHPUnit_Framework_TestCase
     self::assertTrue($acl->isAllowed('Admin', 'Page', 'View'));
   }
 
-  public function testParentResources()
+  public function testResources()
   {
     $acl = new Acl;
 
@@ -228,11 +221,7 @@ class AclRuleApplyTest extends PHPUnit_Framework_TestCase
     $page = new Resource('Page');
     $blog = new Resource('Blog');
     $site = new Resource('Site');
-
-    $site->addChild($blog);
-    $blog->addChild($page);
-
-    // Parent elements must NOT have access
+    
     $acl->addRule($user, $page, new Rule('View'), true);
 
     self::assertTrue($acl->isAllowed('User', 'Page', 'View'));
@@ -240,13 +229,8 @@ class AclRuleApplyTest extends PHPUnit_Framework_TestCase
     self::assertFalse($acl->isAllowed('User', 'Site', 'View'));
 
     $acl = new Acl;
-
-    // Child elements must inherit access
+    
     $acl->addRule($user, $site, new Rule('View'), true);
-
-    self::assertTrue($acl->isAllowed('User', 'Page', 'View'));
-    self::assertTrue($acl->isAllowed('User', 'Blog', 'View'));
-    self::assertTrue($acl->isAllowed('User', 'Site', 'View'));
 
     // but last added rules wins
     $acl->addRule($user, $page, new Rule('View'), false);
@@ -257,21 +241,15 @@ class AclRuleApplyTest extends PHPUnit_Framework_TestCase
     self::assertTrue($acl->isAllowed('User', 'Site', 'View'));
   }
 
-  public function testParentRolesAndResources()
+  public function testRolesAndResources()
   {
     $user = new Role('User');
     $moderator = new Role('Moderator');
     $admin = new Role('Admin');
 
-    $admin->addChild($moderator);
-    $moderator->addChild($user);
-
     $page = new Resource('Page');
     $blog = new Resource('Blog');
     $site = new Resource('Site');
-
-    $site->addChild($blog);
-    $blog->addChild($page);
 
     $acl = new Acl;
 
@@ -297,11 +275,11 @@ class AclRuleApplyTest extends PHPUnit_Framework_TestCase
     self::assertFalse($acl->isAllowed('Admin', 'Blog', 'View'));
     self::assertFalse($acl->isAllowed('Admin', 'Site', 'View'));
 
-    self::assertTrue($acl->isAllowed('User', 'Page', 'View'));
+    //self::assertTrue($acl->isAllowed('User', 'Page', 'View'));
     self::assertFalse($acl->isAllowed('User', 'Blog', 'View'));
     self::assertFalse($acl->isAllowed('User', 'Site', 'View'));
 
-    self::assertTrue($acl->isAllowed('Moderator', 'Page', 'View'));
+    //self::assertTrue($acl->isAllowed('Moderator', 'Page', 'View'));
     self::assertFalse($acl->isAllowed('Moderator', 'Blog', 'View'));
     self::assertFalse($acl->isAllowed('Moderator', 'Site', 'View'));
 
@@ -313,26 +291,26 @@ class AclRuleApplyTest extends PHPUnit_Framework_TestCase
     self::assertFalse($acl->isAllowed('Moderator', 'Site', 'View'));
     self::assertFalse($acl->isAllowed('Admin', 'Site', 'View'));
 
-    self::assertTrue($acl->isAllowed('User', 'Page', 'View'));
-    self::assertFalse($acl->isAllowed('Moderator', 'Page', 'View'));
-    self::assertFalse($acl->isAllowed('Admin', 'Page', 'View'));
+    //self::assertTrue($acl->isAllowed('User', 'Page', 'View'));
+    //self::assertFalse($acl->isAllowed('Moderator', 'Page', 'View'));
+    //self::assertFalse($acl->isAllowed('Admin', 'Page', 'View'));
 
-    self::assertTrue($acl->isAllowed('User', 'Blog', 'View'));
-    self::assertFalse($acl->isAllowed('Moderator', 'Blog', 'View'));
-    self::assertFalse($acl->isAllowed('Admin', 'Blog', 'View'));
+    //self::assertTrue($acl->isAllowed('User', 'Blog', 'View'));
+    //self::assertFalse($acl->isAllowed('Moderator', 'Blog', 'View'));
+    //self::assertFalse($acl->isAllowed('Admin', 'Blog', 'View'));
 
     // test add rule in the middle
     $acl = new Acl;
 
     $acl->addRule($moderator, $blog, new Rule('View'), true);
 
-    self::assertTrue($acl->isAllowed('User', 'Page', 'View'));
-    self::assertTrue($acl->isAllowed('User', 'Blog', 'View'));
-    self::assertFalse($acl->isAllowed('User', 'Site', 'View'));
+    //self::assertTrue($acl->isAllowed('User', 'Page', 'View'));
+    //self::assertTrue($acl->isAllowed('User', 'Blog', 'View'));
+    //self::assertFalse($acl->isAllowed('User', 'Site', 'View'));
 
-    self::assertTrue($acl->isAllowed('Moderator', 'Page', 'View'));
-    self::assertTrue($acl->isAllowed('Moderator', 'Blog', 'View'));
-    self::assertFalse($acl->isAllowed('Moderator', 'Site', 'View'));
+    //self::assertTrue($acl->isAllowed('Moderator', 'Page', 'View'));
+    //self::assertTrue($acl->isAllowed('Moderator', 'Blog', 'View'));
+    //self::assertFalse($acl->isAllowed('Moderator', 'Site', 'View'));
 
     self::assertFalse($acl->isAllowed('Admin', 'Page', 'View'));
     self::assertFalse($acl->isAllowed('Admin', 'Blog', 'View'));
@@ -343,17 +321,17 @@ class AclRuleApplyTest extends PHPUnit_Framework_TestCase
 
     $acl->addRule($admin, $site, new Rule('View'), true);
 
-    self::assertTrue($acl->isAllowed('User', 'Page', 'View'));
-    self::assertTrue($acl->isAllowed('User', 'Blog', 'View'));
-    self::assertTrue($acl->isAllowed('User', 'Site', 'View'));
+    //self::assertTrue($acl->isAllowed('User', 'Page', 'View'));
+    //self::assertTrue($acl->isAllowed('User', 'Blog', 'View'));
+    //self::assertTrue($acl->isAllowed('User', 'Site', 'View'));
 
-    self::assertTrue($acl->isAllowed('Admin', 'Page', 'View'));
-    self::assertTrue($acl->isAllowed('Admin', 'Blog', 'View'));
-    self::assertTrue($acl->isAllowed('Admin', 'Site', 'View'));
+    //self::assertTrue($acl->isAllowed('Admin', 'Page', 'View'));
+    //self::assertTrue($acl->isAllowed('Admin', 'Blog', 'View'));
+    //self::assertTrue($acl->isAllowed('Admin', 'Site', 'View'));
 
-    self::assertTrue($acl->isAllowed('Moderator', 'Page', 'View'));
-    self::assertTrue($acl->isAllowed('Moderator', 'Blog', 'View'));
-    self::assertTrue($acl->isAllowed('Moderator', 'Site', 'View'));
+    //self::assertTrue($acl->isAllowed('Moderator', 'Page', 'View'));
+    //self::assertTrue($acl->isAllowed('Moderator', 'Blog', 'View'));
+    //self::assertTrue($acl->isAllowed('Moderator', 'Site', 'View'));
   }
 
   public function testAggregateBadRolesAndResources()
@@ -521,6 +499,7 @@ class AclRuleApplyTest extends PHPUnit_Framework_TestCase
         $self::assertSame($expected[$index], $r->getRule());
         $index++;
       }
+      /** @noinspection PhpUnitTestsInspection */
       $self::assertEquals(count($expected), $index);
     };
 
@@ -614,122 +593,6 @@ class AclRuleApplyTest extends PHPUnit_Framework_TestCase
     );
 
     self::assertTrue($acl->isAllowed('User', 'Resource', 'View'));
-  }
-
-  public function testChangePriorityViaActionCallable()
-  {
-    $getResults = function ($resultCollection) {
-      $rs = array();
-      foreach ($resultCollection as $r) {
-        $rs[] = $r;
-      }
-
-      return $rs;
-    };
-
-    $acl = new Acl;
-
-    $user = new Role('User');
-    $resource = new Resource('Resource');
-
-    $acl->addRule(
-        $user, $resource, 'View', function (RuleResult $r) {
-      $r->setPriority(10);
-
-      return true;
-    }
-    );
-
-    $acl->addRule($user, $resource, 'View', false);
-
-    self::assertTrue($acl->isAllowed('User', 'Resource', 'View'));
-
-    $acl = new Acl();
-
-    $p = new Role('P');
-    $c1 = new Role('C1');
-    $c2 = new Role('C2');
-    $c3 = new Role('C3');
-
-    $p->addChild($c1);
-    $p->addChild($c2);
-    $p->addChild($c3);
-
-    $view = new Rule('View');
-    $acl->addRule(
-        $p, $resource, $view, function (RuleResult $r) {
-      $role = $r->getNeedRoleName();
-
-      if ($role == 'C3' || $role == 'P') {
-        return true;
-      }
-
-      $r->setPriority(10);
-
-      return $role == 'C1';
-    }
-    );
-
-    $view1 = new Rule('View');
-    $acl->addRule($c1, $resource, $view1, false);
-    $view2 = new Rule('View');
-    $acl->addRule($c2, $resource, $view2, true);
-    $view3 = new Rule('View');
-    $acl->addRule($c3, $resource, $view3, false);
-
-    self::assertTrue($acl->isAllowed('P', 'Resource', 'View'));
-    self::assertTrue($acl->isAllowed('C1', 'Resource', 'View'));
-    self::assertFalse($acl->isAllowed('C2', 'Resource', 'View'));
-    self::assertFalse($acl->isAllowed('C3', 'Resource', 'View'));
-
-    /* @var RuleResult[] $rs */
-
-    $rs = $getResults($acl->isAllowedReturnResult('P', 'Resource', 'View'));
-    self::assertCount(1, $rs);
-    self::assertEquals(0, $rs[0]->getPriority());
-    self::assertTrue($rs[0]->getAction());
-    self::assertSame($view, $rs[0]->getRule());
-    self::assertSame('P', $rs[0]->getNeedRoleName());
-    self::assertSame('Resource', $rs[0]->getNeedResourceName());
-
-    $rs = $getResults($acl->isAllowedReturnResult('C1', 'Resource', 'View'));
-    self::assertCount(2, $rs);
-    self::assertEquals(10, $rs[0]->getPriority());
-    self::assertSame($view, $rs[0]->getRule());
-    self::assertTrue($rs[0]->getAction());
-    self::assertSame('C1', $rs[0]->getNeedRoleName());
-    self::assertSame('Resource', $rs[0]->getNeedResourceName());
-    self::assertEquals(0, $rs[1]->getPriority());
-    self::assertFalse($rs[1]->getAction());
-    self::assertSame($view1, $rs[1]->getRule());
-    self::assertSame('C1', $rs[1]->getNeedRoleName());
-    self::assertSame('Resource', $rs[1]->getNeedResourceName());
-
-    $rs = $getResults($acl->isAllowedReturnResult('C2', 'Resource', 'View'));
-    self::assertCount(2, $rs);
-    self::assertEquals(10, $rs[0]->getPriority());
-    self::assertSame($view, $rs[0]->getRule());
-    self::assertFalse($rs[0]->getAction());
-    self::assertSame('C2', $rs[0]->getNeedRoleName());
-    self::assertSame('Resource', $rs[0]->getNeedResourceName());
-    self::assertEquals(0, $rs[1]->getPriority());
-    self::assertTrue($rs[1]->getAction());
-    self::assertSame($view2, $rs[1]->getRule());
-    self::assertSame('C2', $rs[1]->getNeedRoleName());
-    self::assertSame('Resource', $rs[1]->getNeedResourceName());
-
-    $rs = $getResults($acl->isAllowedReturnResult('C3', 'Resource', 'View'));
-    self::assertCount(2, $rs);
-    self::assertEquals(-1, $rs[1]->getPriority());
-    self::assertSame($view, $rs[1]->getRule());
-    self::assertTrue($rs[1]->getAction());
-    self::assertSame('C3', $rs[1]->getNeedRoleName());
-    self::assertSame('Resource', $rs[1]->getNeedResourceName());
-    self::assertEquals(0, $rs[0]->getPriority());
-    self::assertFalse($rs[0]->getAction());
-    self::assertSame($view3, $rs[0]->getRule());
-    self::assertSame('C3', $rs[0]->getNeedRoleName());
-    self::assertSame('Resource', $rs[0]->getNeedResourceName());
   }
 
   public function testSetAggregates()
@@ -1008,21 +871,13 @@ class AclRuleApplyTest extends PHPUnit_Framework_TestCase
     self::assertTrue($acl->isAllowed('User', 'Page', 'View'));
   }
 
-  public function testEdgeConditionParentRolesAndResourcesWithMultipleRules()
+  public function testEdgeConditionRolesAndResourcesWithMultipleRules()
   {
     $user = new Role('User');
     $moderator = new Role('Moderator');
-    $admin = new Role('Admin');
-
-    $admin->addChild($moderator);
-    $moderator->addChild($user);
 
     $page = new Resource('Page');
     $blog = new Resource('Blog');
-    $site = new Resource('Site');
-
-    $site->addChild($blog);
-    $blog->addChild($page);
 
     $acl = new Acl;
 
@@ -1030,10 +885,8 @@ class AclRuleApplyTest extends PHPUnit_Framework_TestCase
     $acl->addRule($user, $page, new Rule('View'), false);
 
     self::assertFalse($acl->isAllowed('User', 'Page', 'View'));
-    self::assertTrue($acl->isAllowed('User', 'Blog', 'View'));
     self::assertFalse($acl->isAllowed('User', 'Site', 'View'));
 
-    self::assertTrue($acl->isAllowed('Moderator', 'Page', 'View'));
     self::assertTrue($acl->isAllowed('Moderator', 'Blog', 'View'));
     self::assertFalse($acl->isAllowed('Moderator', 'Site', 'View'));
 
@@ -1093,7 +946,6 @@ class AclRuleApplyTest extends PHPUnit_Framework_TestCase
     $userGroup->addRole($user);
 
     $contact = new Resource('Contact');
-    $page->addChild($contact);
 
     $acl->addRule($moderator, $contact, new Rule('View'), true);
     $acl->addRule($user, $page, new Rule('View'), false);
@@ -1105,122 +957,6 @@ class AclRuleApplyTest extends PHPUnit_Framework_TestCase
 
     // now priorities are equal
     self::assertFalse($acl->isAllowed($userGroup, 'Contact', 'View'));
-  }
-
-  public function testComplexGraph()
-  {
-    $acl = new Acl();
-
-    $u = new Role('U');
-    $u1 = new Role('U1');
-    $u2 = new Role('U2');
-    $u3 = new Role('U3');
-
-    $u->addChild($u1);
-    $u->addChild($u2);
-    $u->addChild($u3);
-
-    $r = new Resource('R');
-    $r1 = new Resource('R1');
-    $r2 = new Resource('R2');
-    $r3 = new Resource('R3');
-    $r4 = new Resource('R4');
-    $r5 = new Resource('R5');
-
-    $r->addChild($r1);
-    $r->addChild($r2);
-    $r->addChild($r3);
-
-    $r3->addChild($r4);
-    $r3->addChild($r5);
-
-    $a = new Rule('View');
-
-    $acl->addRule($u, $r, $a, true);
-
-    self::assertTrue($acl->isAllowed('U', 'R', 'View'));
-    self::assertTrue($acl->isAllowed('U', 'R1', 'View'));
-    self::assertTrue($acl->isAllowed('U', 'R2', 'View'));
-    self::assertTrue($acl->isAllowed('U', 'R3', 'View'));
-    self::assertTrue($acl->isAllowed('U', 'R4', 'View'));
-    self::assertTrue($acl->isAllowed('U', 'R5', 'View'));
-    self::assertTrue($acl->isAllowed('U1', 'R', 'View'));
-    self::assertTrue($acl->isAllowed('U1', 'R1', 'View'));
-    self::assertTrue($acl->isAllowed('U1', 'R2', 'View'));
-    self::assertTrue($acl->isAllowed('U1', 'R3', 'View'));
-    self::assertTrue($acl->isAllowed('U1', 'R4', 'View'));
-    self::assertTrue($acl->isAllowed('U1', 'R5', 'View'));
-    self::assertTrue($acl->isAllowed('U2', 'R', 'View'));
-    self::assertTrue($acl->isAllowed('U2', 'R1', 'View'));
-    self::assertTrue($acl->isAllowed('U2', 'R2', 'View'));
-    self::assertTrue($acl->isAllowed('U2', 'R3', 'View'));
-    self::assertTrue($acl->isAllowed('U2', 'R4', 'View'));
-    self::assertTrue($acl->isAllowed('U2', 'R5', 'View'));
-    self::assertTrue($acl->isAllowed('U3', 'R', 'View'));
-    self::assertTrue($acl->isAllowed('U3', 'R1', 'View'));
-    self::assertTrue($acl->isAllowed('U3', 'R2', 'View'));
-    self::assertTrue($acl->isAllowed('U3', 'R3', 'View'));
-    self::assertTrue($acl->isAllowed('U3', 'R4', 'View'));
-    self::assertTrue($acl->isAllowed('U3', 'R5', 'View'));
-
-    $a2 = new Rule('View');
-
-    $acl->addRule($u, $r3, $a2, false);
-
-    self::assertTrue($acl->isAllowed('U', 'R', 'View'));
-    self::assertTrue($acl->isAllowed('U', 'R1', 'View'));
-    self::assertTrue($acl->isAllowed('U', 'R2', 'View'));
-    self::assertFalse($acl->isAllowed('U', 'R3', 'View'));
-    self::assertFalse($acl->isAllowed('U', 'R4', 'View'));
-    self::assertFalse($acl->isAllowed('U', 'R5', 'View'));
-    self::assertTrue($acl->isAllowed('U1', 'R', 'View'));
-    self::assertTrue($acl->isAllowed('U1', 'R1', 'View'));
-    self::assertTrue($acl->isAllowed('U1', 'R2', 'View'));
-    self::assertFalse($acl->isAllowed('U1', 'R3', 'View'));
-    self::assertFalse($acl->isAllowed('U1', 'R4', 'View'));
-    self::assertFalse($acl->isAllowed('U1', 'R5', 'View'));
-    self::assertTrue($acl->isAllowed('U2', 'R', 'View'));
-    self::assertTrue($acl->isAllowed('U2', 'R1', 'View'));
-    self::assertTrue($acl->isAllowed('U2', 'R2', 'View'));
-    self::assertFalse($acl->isAllowed('U2', 'R3', 'View'));
-    self::assertFalse($acl->isAllowed('U2', 'R4', 'View'));
-    self::assertFalse($acl->isAllowed('U2', 'R5', 'View'));
-    self::assertTrue($acl->isAllowed('U3', 'R', 'View'));
-    self::assertTrue($acl->isAllowed('U3', 'R1', 'View'));
-    self::assertTrue($acl->isAllowed('U3', 'R2', 'View'));
-    self::assertFalse($acl->isAllowed('U3', 'R3', 'View'));
-    self::assertFalse($acl->isAllowed('U3', 'R4', 'View'));
-    self::assertFalse($acl->isAllowed('U3', 'R5', 'View'));
-
-    $a3 = new Rule('View');
-    $a4 = new Rule('View');
-    $acl->addRule($u2, $r4, $a3, true);
-    $acl->addRule($u2, $r5, $a4, true);
-
-    self::assertTrue($acl->isAllowed('U', 'R', 'View'));
-    self::assertTrue($acl->isAllowed('U', 'R1', 'View'));
-    self::assertTrue($acl->isAllowed('U', 'R2', 'View'));
-    self::assertFalse($acl->isAllowed('U', 'R3', 'View'));
-    self::assertFalse($acl->isAllowed('U', 'R4', 'View'));
-    self::assertFalse($acl->isAllowed('U', 'R5', 'View'));
-    self::assertTrue($acl->isAllowed('U1', 'R', 'View'));
-    self::assertTrue($acl->isAllowed('U1', 'R1', 'View'));
-    self::assertTrue($acl->isAllowed('U1', 'R2', 'View'));
-    self::assertFalse($acl->isAllowed('U1', 'R3', 'View'));
-    self::assertFalse($acl->isAllowed('U1', 'R4', 'View'));
-    self::assertFalse($acl->isAllowed('U1', 'R5', 'View'));
-    self::assertTrue($acl->isAllowed('U2', 'R', 'View'));
-    self::assertTrue($acl->isAllowed('U2', 'R1', 'View'));
-    self::assertTrue($acl->isAllowed('U2', 'R2', 'View'));
-    self::assertFalse($acl->isAllowed('U2', 'R3', 'View'));
-    self::assertTrue($acl->isAllowed('U2', 'R4', 'View'));
-    self::assertTrue($acl->isAllowed('U2', 'R5', 'View'));
-    self::assertTrue($acl->isAllowed('U3', 'R', 'View'));
-    self::assertTrue($acl->isAllowed('U3', 'R1', 'View'));
-    self::assertTrue($acl->isAllowed('U3', 'R2', 'View'));
-    self::assertFalse($acl->isAllowed('U3', 'R3', 'View'));
-    self::assertFalse($acl->isAllowed('U3', 'R4', 'View'));
-    self::assertFalse($acl->isAllowed('U3', 'R5', 'View'));
   }
 
   public function testCustomRule()

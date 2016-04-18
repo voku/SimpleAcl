@@ -27,6 +27,7 @@ class SplPriorityQueue extends Base
     if (is_int($priority)) {
       $priority = array($priority, $rulePriority, $this->queueOrder++);
     }
+
     parent::insert($datum, $priority);
   }
 }

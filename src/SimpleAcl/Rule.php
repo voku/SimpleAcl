@@ -185,7 +185,7 @@ class Rule
   }
 
   /**
-   * Check owing Role & Resource (and their children) and match its with $roleName & $resourceName;
+   * Check owing Role & Resource and match its with $roleName & $resourceName;
    * if match was found depending on action allow or deny access to $resourceName for $roleName.
    *
    * @param        $needRuleName
@@ -199,23 +199,26 @@ class Rule
   {
     if ($this->isRuleMatched($needRuleName)) {
 
-      if (null !== $this->getRole()) {
-        $roles = new RecursiveIteratorIterator($this->getRole(), RecursiveIteratorIterator::SELF_FIRST);
+      if (null !== $this->role) {
+        $roles = iterator_to_array($this->role);
       } else {
         $roles = array(null);
       }
 
-      if (null !== $this->getResource()) {
-        $resources = new RecursiveIteratorIterator($this->getResource(), RecursiveIteratorIterator::SELF_FIRST);
+      if (null !== $this->resource) {
+        $resources = iterator_to_array($this->getResource());
       } else {
         $resources = array(null);
       }
 
+      $rolesDepth = 0;
+      $resourceDepth = 0;
+      
       foreach ($roles as $role) {
-        $roleDepth = $role ? $roles->getDepth() : 0;
+        $roleDepth = $role ? $rolesDepth++ : 0;
 
         foreach ($resources as $resource) {
-          $resourceDepth = $resource ? $resources->getDepth() : 0;
+          $resourceDepth = $resource ? $resourceDepth++ : 0;
 
           $depth = $roleDepth + $resourceDepth;
           $result = $this->match($role, $resource, $needRoleName, $needResourceName, -$depth);

@@ -19,13 +19,6 @@ abstract class Object implements IteratorAggregate
   protected $name;
 
   /**
-   * Holds children.
-   *
-   * @var Object[]
-   */
-  protected $children = array();
-
-  /**
    * Create Object with given name.
    *
    * @param string $name
@@ -44,42 +37,6 @@ abstract class Object implements IteratorAggregate
   }
 
   /**
-   * Adds child if it not added.
-   *
-   * @param \SimpleAcl\Object $child
-   */
-  public function addChild(\SimpleAcl\Object $child)
-  {
-    if ($this->hasChild($child)) {
-      return;
-    }
-
-    $this->children[] = $child;
-  }
-
-  /**
-   * Checks if object have child.
-   *
-   * @param Object|string $childName
-   *
-   * @return null|Object
-   */
-  public function hasChild($childName)
-  {
-    if ($childName instanceof Object) {
-      $childName = $childName->getName();
-    }
-
-    foreach ($this->children as $child) {
-      if ($child->getName() === $childName) {
-        return $child;
-      }
-    }
-
-    return null;
-  }
-
-  /**
    * @return string
    */
   public function getName()
@@ -93,39 +50,5 @@ abstract class Object implements IteratorAggregate
   public function setName($name)
   {
     $this->name = $name;
-  }
-
-  /**
-   * Remove child, return true if child was removed.
-   *
-   * @param Object|string $needChild
-   *
-   * @return bool
-   */
-  public function removeChild($needChild)
-  {
-    if ($needChild instanceof Object) {
-      $needChild = $needChild->getName();
-    }
-
-    foreach ($this->children as $childIndex => $child) {
-      if ($child->getName() === $needChild) {
-        unset($this->children[$childIndex]);
-
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  /**
-   * Returns children.
-   *
-   * @return Object[]
-   */
-  public function getChildren()
-  {
-    return $this->children;
   }
 }

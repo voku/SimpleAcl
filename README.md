@@ -86,12 +86,12 @@ $acl = new Acl();
 
 $user = new Role('User');
 $admin = new Role('Admin');
-$user->addChild($admin); // add user's child
 
 $siteFrontend = new Resource('SiteFrontend');
 $siteBackend = new Resource('SiteBackend');
 
 $acl->addRule($user, $siteFrontend, 'View', true);
+$acl->addRule($admin, $siteFrontend, 'View', true);
 $acl->addRule($admin, $siteBackend, 'View', true);
 
 var_dump($acl->isAllowed('User', 'SiteFrontend', 'View')); // true

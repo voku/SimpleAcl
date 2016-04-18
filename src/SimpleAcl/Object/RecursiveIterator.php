@@ -55,21 +55,12 @@ class RecursiveIterator implements SplIterator
 
   public function hasChildren()
   {
-    if (null === $this->key()) {
-      return false;
-    }
-
-    $object = $this->current();
-
-    return count($object->getChildren()) > 0;
+    return false;
   }
 
   public function getChildren()
   {
-    $object = $this->current();
-    $children = $object->getChildren();
-
-    return new RecursiveIterator($children);
+    return false;
   }
 
 

@@ -18,7 +18,7 @@ class ResourceAggregate extends ObjectAggregate implements ResourceAggregateInte
    *
    * @param \SimpleAcl\Resource $resource
    */
-  public function addResource(Resource $resource)
+  public function addResource(\SimpleAcl\Resource $resource)
   {
     parent::addObject($resource);
   }
