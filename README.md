@@ -21,7 +21,7 @@ Add following in your composer.json:
 ```json
 {
     "require": {
-        "voku/simpleacl": "2.*"
+        "voku/simpleacl": "3.*"
     }
 }
 ```
