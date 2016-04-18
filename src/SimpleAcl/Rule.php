@@ -1,7 +1,6 @@
 <?php
 namespace SimpleAcl;
 
-use RecursiveIteratorIterator;
 use SimpleAcl\Resource;
 use SimpleAcl\Resource\ResourceAggregateInterface;
 use SimpleAcl\Role;
