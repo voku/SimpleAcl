@@ -211,11 +211,11 @@ class Rule
         $resources = array(null);
       }
 
-      $rolesDepth = 0;
+      $roleDepth = 0;
       $resourceDepth = 0;
       
       foreach ($roles as $role) {
-        $roleDepth = $role ? $rolesDepth++ : 0;
+        $roleDepth = $role ? $roleDepth++ : 0;
 
         foreach ($resources as $resource) {
           $resourceDepth = $resource ? $resourceDepth++ : 0;
