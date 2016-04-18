@@ -197,16 +197,39 @@ class Rule
    */
   public function isAllowed($needRuleName, $needRoleName, $needResourceName)
   {
+    static $roleCache = array();
+    static $resourceCache = array();
+
     if ($this->isRuleMatched($needRuleName)) {
 
       if (null !== $this->role) {
-        $roles = iterator_to_array($this->role);
+
+        $roleNameTmp = $this->role->getName();
+
+        if (!isset($roleCache[$roleNameTmp])) {
+          $roles = iterator_to_array($this->role);
+
+          $roleCache[$roleNameTmp] = $roles;
+        } else {
+          $roles = $roleCache[$roleNameTmp];
+        }
+
       } else {
         $roles = array(null);
       }
 
       if (null !== $this->resource) {
-        $resources = iterator_to_array($this->getResource());
+
+        $resourceNameTmp = $this->getResource()->getName();
+
+        if (!isset($resourceCache[$resourceNameTmp])) {
+          $resources = iterator_to_array($this->getResource());
+
+          $resourceCache[$resourceNameTmp] = $resources;
+        } else {
+          $resources = $resourceCache[$resourceNameTmp];
+        }
+
       } else {
         $resources = array(null);
       }
