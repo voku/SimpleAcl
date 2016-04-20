@@ -1,3 +1,7 @@
+4.0.x
+
+    - removed Custom Role Match (because of poor performance)
+
 3.0.x
 
     - removed Child Elements (because of poor performance)
