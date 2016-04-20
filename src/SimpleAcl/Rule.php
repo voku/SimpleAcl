@@ -47,7 +47,7 @@ class Rule
   protected $role;
 
   /**
-   * @var Resource
+   * @var \SimpleAcl\Resource
    */
   protected $resource;
 
@@ -155,9 +155,9 @@ class Rule
     $actionResult = $this->action;
 
     if (
-        !is_callable($actionResult)
-        ||
         null === $ruleResult
+        ||
+        !is_callable($actionResult)
     ) {
       if (null !== $actionResult) {
         return (bool)$actionResult;
@@ -199,7 +199,15 @@ class Rule
     static $roleCache = array();
     static $resourceCache = array();
 
-    if ($this->isRuleMatched($needRuleName)) {
+    if (
+        (
+            $needRuleName != 'RuleWide'
+            &&
+            $this->name === $needRuleName
+        )
+        ||
+        $this->isRuleMatched($needRuleName)
+    ) {
 
       if (null !== $this->role) {
 
@@ -219,10 +227,10 @@ class Rule
 
       if (null !== $this->resource) {
 
-        $resourceNameTmp = $this->getResource()->getName();
+        $resourceNameTmp = $this->resource->getName();
 
         if (!isset($resourceCache[$resourceNameTmp])) {
-          $resources = iterator_to_array($this->getResource());
+          $resources = iterator_to_array($this->resource);
 
           $resourceCache[$resourceNameTmp] = $resources;
         } else {
@@ -235,18 +243,46 @@ class Rule
 
       $roleDepth = 0;
       $resourceDepth = 0;
-      
+
       foreach ($roles as $role) {
-        $roleDepth = $role ? $roleDepth++ : 0;
+        $roleDepth = $role ? $roleDepth + 1 : 0;
+
+        if (
+            null === $role
+            ||
+            ($role && $role->name === $needRoleName)
+        ) {
+          $roleNameMatched = true;
+        } else {
+          $roleNameMatched = false;
+        }
 
         foreach ($resources as $resource) {
-          $resourceDepth = $resource ? $resourceDepth++ : 0;
-
+          $resourceDepth = $resource ? $resourceDepth + 1 : 0;
           $depth = $roleDepth + $resourceDepth;
-          $result = $this->match($role, $resource, $needRoleName, $needResourceName, -$depth);
 
-          if ($result) {
-            return $result;
+          if (
+              null === $resource
+              ||
+              ($resource && $resource->name === $needResourceName)
+          ) {
+            $resourceNameMatched = true;
+          } else {
+            $resourceNameMatched = false;
+          }
+
+          // Check if $role and $resource match to need role and resource.
+          $ruleResult = null;
+          if (
+              $roleNameMatched === true
+              &&
+              $resourceNameMatched === true
+          ) {
+            $ruleResult = new RuleResult($this, -$depth, $needRoleName, $needResourceName);
+          }
+
+          if ($ruleResult) {
+            return $ruleResult;
           }
         }
       }
@@ -258,13 +294,13 @@ class Rule
   /**
    * Check if rule can be used.
    *
-   * @param $neeRuleName
+   * @param $needRuleName
    *
    * @return bool
    */
-  protected function isRuleMatched($neeRuleName)
+  protected function isRuleMatched($needRuleName)
   {
-    return $this->getName() === $neeRuleName;
+    return $this->name === $needRuleName;
   }
 
   /**
@@ -313,38 +349,6 @@ class Rule
   public function setResource(\SimpleAcl\Resource $resource = null)
   {
     $this->resource = $resource;
-  }
-
-  /**
-   * Check if $role and $resource match to need role and resource.
-   *
-   * @param Role|null                $role
-   * @param \SimpleAcl\Resource $resource
-   * @param string                   $needRoleName
-   * @param string                   $needResourceName
-   * @param                          $priority
-   *
-   * @return RuleResult|null
-   */
-  protected function match(Role $role = null, \SimpleAcl\Resource $resource = null, $needRoleName, $needResourceName, $priority)
-  {
-    if (
-        (
-            null === $role
-            ||
-            ($role && $role->getName() === $needRoleName)
-        )
-        &&
-        (
-            null === $resource
-            ||
-            ($resource && $resource->getName() === $needResourceName)
-        )
-    ) {
-      return new RuleResult($this, $priority, $needRoleName, $needResourceName);
-    }
-
-    return null;
   }
 
   /**

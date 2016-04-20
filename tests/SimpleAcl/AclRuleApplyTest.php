@@ -959,35 +959,28 @@ class AclRuleApplyTest extends PHPUnit_Framework_TestCase
     self::assertFalse($acl->isAllowed($userGroup, 'Contact', 'View'));
   }
 
-  public function testCustomRule()
+  public function testMoreRule()
   {
-    require_once __DIR__ . '/../Stubs/CustomRule.php';
-    // must match any role and act as wide
     $acl = new Acl();
-    $rule = new \MathAnyRoleAndActAsWide('MathAnyRoleAndActAsWide');
+    $rule = new Rule('View');
     $u = new Role('U');
     $r = new Resource('R');
     $acl->addRule($u, $r, $rule, true);
-    self::assertTrue($acl->isAllowed('U', 'R', 'ShouldActAsWide'));
-    self::assertTrue($acl->isAllowed('U1', 'R', 'ShouldActAsWide'), 'Must work with any role');
-    self::assertFalse($acl->isAllowed('U', 'R1', 'ShouldActAsWide'));
-    self::assertFalse($acl->isAllowed('U1', 'R1', 'MathAnyRoleAndActAsWide'));
-    // must match any resource and act as wide
+    self::assertTrue($acl->isAllowed('U', 'R', 'View'));
+    self::assertFalse($acl->isAllowed('U', 'R1', 'View'));
+
     $acl = new Acl();
-    $rule = new \MathAnyResourceAndActAsWide('MathAnyResourceAndActAsWide');
+    $rule = new Rule('View');
     $u = new Role('U');
     $r = new Resource('R');
     $acl->addRule($u, $r, $rule, true);
-    self::assertTrue($acl->isAllowed('U', 'R', 'ShouldActAsWide'));
-    self::assertTrue($acl->isAllowed('U', 'R1', 'ShouldActAsWide'), 'Must work with any resource');
-    self::assertFalse($acl->isAllowed('U1', 'R', 'ShouldActAsWide'));
-    self::assertFalse($acl->isAllowed('U1', 'R1', 'MathAnyResourceAndActAsWide'));
-    // must match anything
+    self::assertTrue($acl->isAllowed('U', 'R', 'View'));
+
     $acl = new Acl();
-    $rule = new \MatchAnything('MathAnything');
+    $rule = new Rule('View');
     $u = new Role('U');
     $r = new Resource('R');
     $acl->addRule($u, $r, $rule, true);
-    self::assertTrue($acl->isAllowed('anything', 'anything', 'anything'));
+    self::assertFalse($acl->isAllowed('anything', 'anything', 'anything'));
   }
 }

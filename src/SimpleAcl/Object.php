@@ -16,7 +16,7 @@ abstract class Object implements IteratorAggregate
    *
    * @var string
    */
-  protected $name;
+  public $name;
 
   /**
    * Create Object with given name.
