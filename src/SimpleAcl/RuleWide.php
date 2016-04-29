@@ -20,4 +20,3 @@ class RuleWide extends Rule
     return true;
   }
 }
-

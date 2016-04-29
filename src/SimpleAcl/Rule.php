@@ -1,9 +1,7 @@
 <?php
 namespace SimpleAcl;
 
-use SimpleAcl\Resource;
 use SimpleAcl\Resource\ResourceAggregateInterface;
-use SimpleAcl\Role;
 use SimpleAcl\Role\RoleAggregateInterface;
 
 /**
