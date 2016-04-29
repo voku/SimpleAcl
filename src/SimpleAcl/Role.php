@@ -1,8 +1,6 @@
 <?php
 namespace SimpleAcl;
 
-use SimpleAcl\Object;
-
 /**
  * Represent Roles in ACL.
  *
