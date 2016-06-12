@@ -44,7 +44,7 @@ class RuleResultCollection implements IteratorAggregate
       return;
     }
 
-    $this->collection->insert($result, $result->getPriority(), $result->getRulePriority());
+    $this->collection->insert($result);
   }
 
   /**

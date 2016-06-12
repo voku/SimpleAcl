@@ -19,13 +19,6 @@ class Rule
   public $id;
 
   /**
-   * Rule priority affect the order the rule is applied.
-   *
-   * @var int
-   */
-  protected $priority = 0;
-
-  /**
    * Hold name of rule.
    *
    * @var string
@@ -347,22 +340,6 @@ class Rule
   public function setResource(\SimpleAcl\Resource $resource = null)
   {
     $this->resource = $resource;
-  }
-
-  /**
-   * @return int
-   */
-  public function getPriority()
-  {
-    return $this->priority;
-  }
-
-  /**
-   * @param int $priority
-   */
-  public function setPriority($priority)
-  {
-    $this->priority = $priority;
   }
 
   /**

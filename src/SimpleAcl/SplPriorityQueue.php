@@ -1,4 +1,5 @@
 <?php
+
 namespace SimpleAcl;
 
 use SplPriorityQueue as Base;
@@ -19,15 +20,10 @@ class SplPriorityQueue extends Base
    * insert
    *
    * @param mixed $datum
-   * @param mixed $priority
    * @param int   $rulePriority
    */
-  public function insert($datum, $priority, $rulePriority = 0)
+  public function insert($datum, $rulePriority = 0)
   {
-    if (is_int($priority)) {
-      $priority = array($priority, $rulePriority, $this->queueOrder++);
-    }
-
-    parent::insert($datum, $priority);
+    parent::insert($datum, $rulePriority);
   }
 }

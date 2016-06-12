@@ -191,6 +191,65 @@ class Acl
   }
 
   /**
+   * Simple checks is access allowed.
+   *
+   * @param string|RoleAggregateInterface     $roleAggregate
+   * @param string|ResourceAggregateInterface $resourceAggregate
+   * @param string                            $ruleName
+   * @param RuleResultCollection              $ruleResultCollection
+   *
+   * @return RuleResultCollection|null null if there wasn't a clear result
+   */
+  protected function isAllowedReturnResultSimple($roleAggregate, $resourceAggregate, $ruleName, $ruleResultCollection)
+  {
+    if (
+        is_string($ruleName)
+        &&
+        is_string($roleAggregate)
+        &&
+        is_string($resourceAggregate)
+    ) {
+
+      foreach ($this->rules as $ruleTmp) {
+
+        if ($ruleTmp->getName() !== $ruleName) {
+          continue;
+        }
+
+        $resourceTmp = $ruleTmp->getResource();
+        $roleTmp = $ruleTmp->getRole();
+
+        if (
+            (
+                $resourceTmp instanceof Resource
+                &&
+                $resourceTmp->getName() === $resourceAggregate
+            )
+            &&
+            (
+                $roleTmp instanceof Role
+                &&
+                $roleTmp->getName() === $roleAggregate
+            )
+        ) {
+          $resultTmp = $ruleTmp->isAllowed($ruleName, $roleAggregate, $resourceAggregate);
+
+          if (null === $resultTmp->getAction()) {
+            unset($resultTmp);
+          } else {
+            // Set null if rule don't match any role or resource.
+            $ruleResultCollection->add($resultTmp);
+
+            return $ruleResultCollection;
+          }
+        }
+      }
+    }
+
+    return null;
+  }
+
+  /**
    * Checks is access allowed.
    *
    * @param string|RoleAggregateInterface     $roleAggregate
@@ -202,6 +261,11 @@ class Acl
   public function isAllowedReturnResult($roleAggregate, $resourceAggregate, $ruleName)
   {
     $ruleResultCollection = new RuleResultCollection();
+
+    $tmpResult = $this->isAllowedReturnResultSimple($roleAggregate, $resourceAggregate, $ruleName, $ruleResultCollection);
+    if ($tmpResult !== null) {
+      return $tmpResult;
+    }
 
     $roles = $this->getNames($roleAggregate);
     $resources = $this->getNames($resourceAggregate);
@@ -223,6 +287,7 @@ class Acl
           $rule->resetAggregate($roleAggregate, $resourceAggregate);
 
           $result = $rule->isAllowed($ruleName, $roleName, $resourceName);
+
           // Set null if rule don't match any role or resource.
           $ruleResultCollection->add($result);
         }

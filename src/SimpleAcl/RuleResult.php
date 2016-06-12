@@ -117,14 +117,6 @@ class RuleResult
   }
 
   /**
-   * @return int
-   */
-  public function getRulePriority()
-  {
-    return $this->getRule()->getPriority();
-  }
-
-  /**
    * @return string
    */
   public function getId()
