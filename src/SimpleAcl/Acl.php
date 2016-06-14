@@ -212,7 +212,8 @@ class Acl
 
       foreach ($this->rules as $ruleTmp) {
 
-        if ($ruleTmp->getName() !== $ruleName) {
+        // INFO: we can't use "getName()" here, because of performance issue
+        if ($ruleTmp->name !== $ruleName) {
           continue;
         }
 

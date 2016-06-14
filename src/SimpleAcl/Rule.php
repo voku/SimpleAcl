@@ -23,7 +23,7 @@ class Rule
    *
    * @var string
    */
-  protected $name;
+  public $name;
 
   /**
    * Action used when determining is rule allow access to its Resource and Role.
