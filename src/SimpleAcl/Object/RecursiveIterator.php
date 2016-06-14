@@ -1,7 +1,7 @@
 <?php
 namespace SimpleAcl\Object;
 
-use RecursiveIterator as SplIterator;
+use RecursiveIterator as ArrayIterator;
 use SimpleAcl\Object;
 
 /**
@@ -9,7 +9,7 @@ use SimpleAcl\Object;
  *
  * @package SimpleAcl\Object
  */
-class RecursiveIterator implements SplIterator
+class RecursiveIterator implements ArrayIterator
 {
   /**
    * @var Object[]

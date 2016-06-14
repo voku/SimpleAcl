@@ -232,11 +232,7 @@ class Rule
         $resources = array(null);
       }
 
-      $roleDepth = 0;
-      $resourceDepth = 0;
-
       foreach ($roles as $role) {
-        $roleDepth = $role ? $roleDepth + 1 : 0;
 
         if (
             null === $role
@@ -249,8 +245,6 @@ class Rule
         }
 
         foreach ($resources as $resource) {
-          $resourceDepth = $resource ? $resourceDepth + 1 : 0;
-          $depth = $roleDepth + $resourceDepth;
 
           if (
               null === $resource
@@ -269,7 +263,7 @@ class Rule
               &&
               $resourceNameMatched === true
           ) {
-            $ruleResult = new RuleResult($this, -$depth, $needRoleName, $needResourceName);
+            $ruleResult = new RuleResult($this, $needRoleName, $needResourceName);
           }
 
           if ($ruleResult) {

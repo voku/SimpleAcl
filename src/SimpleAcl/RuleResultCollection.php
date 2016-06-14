@@ -11,24 +11,24 @@ use IteratorAggregate;
 class RuleResultCollection implements IteratorAggregate
 {
   /**
-   * @var SplPriorityQueue
+   * @var array
    */
-  public $collection;
+  private $collection;
 
   /**
    * __construct
    */
   public function __construct()
   {
-    $this->collection = new SplPriorityQueue();
+    $this->collection = array();
   }
 
   /**
-   * @return SplPriorityQueue
+   * @return array
    */
   public function getIterator()
   {
-    return clone $this->collection;
+    return new \ArrayIterator($this->collection);
   }
 
   /**
@@ -44,7 +44,7 @@ class RuleResultCollection implements IteratorAggregate
       return;
     }
 
-    $this->collection->insert($result);
+    $this->collection[] = $result;
   }
 
   /**
@@ -57,7 +57,7 @@ class RuleResultCollection implements IteratorAggregate
     }
 
     /** @var RuleResult $result */
-    $result = $this->collection->top();
+    $result = array_pop($this->collection);
 
     return $result->getAction();
   }
@@ -67,6 +67,6 @@ class RuleResultCollection implements IteratorAggregate
    */
   public function any()
   {
-    return $this->collection->count() > 0;
+    return count($this->collection) > 0;
   }
 }

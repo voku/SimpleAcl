@@ -889,7 +889,7 @@ class AclRuleApplyTest extends PHPUnit_Framework_TestCase
     $userGroup->addRole($user);
     self::assertTrue($acl->isAllowed($userGroup, 'Page', 'View'));
 
-    // test case when priority matter
+    // test case
     $acl = new Acl;
 
     $userGroup = new RoleAggregate();
@@ -900,15 +900,10 @@ class AclRuleApplyTest extends PHPUnit_Framework_TestCase
     $contact = new Resource('Contact');
 
     $acl->addRule($moderator, $contact, new Rule('View'), true);
-    $acl->addRule($user, $page, new Rule('View'), true);
-
-    // user rule match first but moderator has higher priority
     self::assertTrue($acl->isAllowed($userGroup, 'Contact', 'View'));
 
     $acl->addRule($user, $contact, new Rule('View'), false);
-
-    // priorities are equal
-    self::assertTrue($acl->isAllowed($userGroup, 'Contact', 'View'));
+    self::assertFalse($acl->isAllowed($userGroup, 'Contact', 'View'));
   }
 
   public function testMoreRule()

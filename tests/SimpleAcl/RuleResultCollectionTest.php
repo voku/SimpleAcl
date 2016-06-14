@@ -35,7 +35,7 @@ class RuleResultCollectionTest extends PHPUnit_Framework_TestCase
     $collection = new RuleResultCollection();
 
     $rule = new Rule('Test');
-    $result = new RuleResult($rule, 0, 'testNeedRole', 'testNeedResource');
+    $result = new RuleResult($rule, 'testNeedRole', 'testNeedResource');
 
     $collection->add($result);
 
@@ -47,7 +47,7 @@ class RuleResultCollectionTest extends PHPUnit_Framework_TestCase
       self::assertSame($result, $r);
       $index++;
     }
-    self::assertEquals(1, $index);
+    self::assertEquals(0, $index);
   }
 
   public function testMultipleAdd()
@@ -55,10 +55,10 @@ class RuleResultCollectionTest extends PHPUnit_Framework_TestCase
     $collection = new RuleResultCollection();
 
     $rule = new Rule('Test');
-    $result = new RuleResult($rule, 0, 'testNeedRole', 'testNeedResource');
+    $result = new RuleResult($rule, 'testNeedRole', 'testNeedResource');
 
     $rule2 = new Rule('Test2');
-    $result2 = new RuleResult($rule2, 0, 'testNeedRole', 'testNeedResource');
+    $result2 = new RuleResult($rule2, 'testNeedRole', 'testNeedResource');
 
     $collection->add($result);
     $collection->add($result2);
@@ -81,11 +81,11 @@ class RuleResultCollectionTest extends PHPUnit_Framework_TestCase
 
     $rule = new Rule('Test');
     $rule->setAction(null);
-    $result = new RuleResult($rule, 0, 'testNeedRole', 'testNeedResource');
+    $result = new RuleResult($rule, 'testNeedRole', 'testNeedResource');
 
     $rule2 = new Rule('Test2');
     $rule2->setAction(true);
-    $result2 = new RuleResult($rule2, 0, 'testNeedRole', 'testNeedResource');
+    $result2 = new RuleResult($rule2, 'testNeedRole', 'testNeedResource');
 
     $collection->add($result);
     self::assertFalse($collection->get());

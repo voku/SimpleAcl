@@ -1,3 +1,7 @@
+5.0.x
+
+    - removed "RuleResult->priority" via "SplPriorityQueue" (because of very poor performance)
+
 4.0.x
 
     - removed Custom Role Match (because of poor performance)

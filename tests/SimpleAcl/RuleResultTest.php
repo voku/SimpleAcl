@@ -22,16 +22,12 @@ class RuleResultTest extends PHPUnit_Framework_TestCase
     $rule->setRoleAggregate($roleAggregate);
     $rule->setResourceAggregate($resourceAggregate);
     $rule->setAction(true);
-    $result = new RuleResult($rule, 0, 'testNeedRole', 'testNeedResource');
+    $result = new RuleResult($rule, 'testNeedRole', 'testNeedResource');
 
     self::assertSame($rule, $result->getRule());
     self::assertEquals('testNeedRole', $result->getNeedRoleName());
     self::assertEquals('testNeedResource', $result->getNeedResourceName());
-    self::assertEquals(0, $result->getPriority());
     self::assertEquals($rule->getAction($result), $result->getAction());
-
-    $result->setPriority(10);
-    self::assertEquals(10, $result->getPriority());
 
     self::assertSame($roleAggregate, $result->getRoleAggregate());
     self::assertSame($resourceAggregate, $result->getResourceAggregate());

@@ -25,7 +25,7 @@ class RuleTest extends PHPUnit_Framework_TestCase
   public function testAction()
   {
     $rule = new Rule('Rule');
-    $ruleResult = new RuleResult($rule, 0, 'testNeedRoleName', 'testNeedResourceName');
+    $ruleResult = new RuleResult($rule, 'testNeedRoleName', 'testNeedResourceName');
 
     $rule->setAction(true);
     self::assertTrue($rule->getAction($ruleResult));
@@ -72,7 +72,7 @@ class RuleTest extends PHPUnit_Framework_TestCase
   public function testActionCallableWithNullRuleResult()
   {
     $rule = new Rule('Rule');
-    $ruleResult = new RuleResult($rule, 0, 'testNeedRoleName', 'testNeedResourceName');
+    $ruleResult = new RuleResult($rule, 'testNeedRoleName', 'testNeedResourceName');
 
     $self = $this;
     $isCalled = false;
@@ -95,7 +95,7 @@ class RuleTest extends PHPUnit_Framework_TestCase
   public function testActionCallable()
   {
     $rule = new Rule('Rule');
-    $ruleResult = new RuleResult($rule, 0, 'testNeedRoleName', 'testNeedResourceName');
+    $ruleResult = new RuleResult($rule, 'testNeedRoleName', 'testNeedResourceName');
 
     $self = $this;
     $isCalled = false;
@@ -105,7 +105,6 @@ class RuleTest extends PHPUnit_Framework_TestCase
           $isCalled = true;
           $self::assertEquals('testNeedRoleName', $r->getNeedRoleName());
           $self::assertEquals('testNeedResourceName', $r->getNeedResourceName());
-          $self::assertEquals(0, $r->getPriority());
 
           return true;
         }
