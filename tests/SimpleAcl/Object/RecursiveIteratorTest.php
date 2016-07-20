@@ -28,7 +28,7 @@ class RecursiveIteratorTest extends PHPUnit_Framework_TestCase
     self::assertNull($iterator->key());
 
     $iterator = new RecursiveIterator(array($this->getObject('Test')));
-    self::assertEquals('Test', $iterator->key());
+    self::assertSame('Test', $iterator->key());
   }
 
   public function testCurrent()
@@ -52,11 +52,11 @@ class RecursiveIteratorTest extends PHPUnit_Framework_TestCase
     $iterator = new RecursiveIterator(array($test1, $test2));
     self::assertTrue($iterator->valid());
     self::assertSame($test1, $iterator->current());
-    self::assertEquals('Test1', $iterator->key());
+    self::assertSame('Test1', $iterator->key());
 
     $iterator->next();
     self::assertTrue($iterator->valid());
     self::assertSame($test2, $iterator->current());
-    self::assertEquals('Test2', $iterator->key());
+    self::assertSame('Test2', $iterator->key());
   }
 }

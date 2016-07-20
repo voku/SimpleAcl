@@ -87,43 +87,43 @@ class AclRuleApplyTest extends PHPUnit_Framework_TestCase
   {
     $runChecks = function (PHPUnit_Framework_TestCase $phpUnit, Acl $acl, $allowed) {
       // Checks for page
-      $phpUnit::assertEquals($allowed, $acl->isAllowed('User', 'Page', 'View'));
-      $phpUnit::assertEquals($allowed, $acl->isAllowed('User', 'Page', 'Edit'));
-      $phpUnit::assertEquals($allowed, $acl->isAllowed('User', 'Page', 'Remove'));
+      $phpUnit::assertSame($allowed, $acl->isAllowed('User', 'Page', 'View'));
+      $phpUnit::assertSame($allowed, $acl->isAllowed('User', 'Page', 'Edit'));
+      $phpUnit::assertSame($allowed, $acl->isAllowed('User', 'Page', 'Remove'));
 
-      $phpUnit::assertEquals($allowed, $acl->isAllowed('Moderator', 'Page', 'View'));
-      $phpUnit::assertEquals($allowed, $acl->isAllowed('Moderator', 'Page', 'Edit'));
-      $phpUnit::assertEquals($allowed, $acl->isAllowed('Moderator', 'Page', 'Remove'));
+      $phpUnit::assertSame($allowed, $acl->isAllowed('Moderator', 'Page', 'View'));
+      $phpUnit::assertSame($allowed, $acl->isAllowed('Moderator', 'Page', 'Edit'));
+      $phpUnit::assertSame($allowed, $acl->isAllowed('Moderator', 'Page', 'Remove'));
 
-      $phpUnit::assertEquals($allowed, $acl->isAllowed('Admin', 'Page', 'View'));
-      $phpUnit::assertEquals($allowed, $acl->isAllowed('Admin', 'Page', 'Edit'));
-      $phpUnit::assertEquals($allowed, $acl->isAllowed('Admin', 'Page', 'Remove'));
+      $phpUnit::assertSame($allowed, $acl->isAllowed('Admin', 'Page', 'View'));
+      $phpUnit::assertSame($allowed, $acl->isAllowed('Admin', 'Page', 'Edit'));
+      $phpUnit::assertSame($allowed, $acl->isAllowed('Admin', 'Page', 'Remove'));
 
       // Checks for blog
-      $phpUnit::assertEquals($allowed, $acl->isAllowed('User', 'Blog', 'View'));
-      $phpUnit::assertEquals($allowed, $acl->isAllowed('User', 'Blog', 'Edit'));
-      $phpUnit::assertEquals($allowed, $acl->isAllowed('User', 'Blog', 'Remove'));
+      $phpUnit::assertSame($allowed, $acl->isAllowed('User', 'Blog', 'View'));
+      $phpUnit::assertSame($allowed, $acl->isAllowed('User', 'Blog', 'Edit'));
+      $phpUnit::assertSame($allowed, $acl->isAllowed('User', 'Blog', 'Remove'));
 
-      $phpUnit::assertEquals($allowed, $acl->isAllowed('Moderator', 'Blog', 'View'));
-      $phpUnit::assertEquals($allowed, $acl->isAllowed('Moderator', 'Blog', 'Edit'));
-      $phpUnit::assertEquals($allowed, $acl->isAllowed('Moderator', 'Blog', 'Remove'));
+      $phpUnit::assertSame($allowed, $acl->isAllowed('Moderator', 'Blog', 'View'));
+      $phpUnit::assertSame($allowed, $acl->isAllowed('Moderator', 'Blog', 'Edit'));
+      $phpUnit::assertSame($allowed, $acl->isAllowed('Moderator', 'Blog', 'Remove'));
 
-      $phpUnit::assertEquals($allowed, $acl->isAllowed('Admin', 'Blog', 'View'));
-      $phpUnit::assertEquals($allowed, $acl->isAllowed('Admin', 'Blog', 'Edit'));
-      $phpUnit::assertEquals($allowed, $acl->isAllowed('Admin', 'Blog', 'Remove'));
+      $phpUnit::assertSame($allowed, $acl->isAllowed('Admin', 'Blog', 'View'));
+      $phpUnit::assertSame($allowed, $acl->isAllowed('Admin', 'Blog', 'Edit'));
+      $phpUnit::assertSame($allowed, $acl->isAllowed('Admin', 'Blog', 'Remove'));
 
       // Checks for site
-      $phpUnit::assertEquals($allowed, $acl->isAllowed('User', 'Site', 'View'));
-      $phpUnit::assertEquals($allowed, $acl->isAllowed('User', 'Site', 'Edit'));
-      $phpUnit::assertEquals($allowed, $acl->isAllowed('User', 'Site', 'Remove'));
+      $phpUnit::assertSame($allowed, $acl->isAllowed('User', 'Site', 'View'));
+      $phpUnit::assertSame($allowed, $acl->isAllowed('User', 'Site', 'Edit'));
+      $phpUnit::assertSame($allowed, $acl->isAllowed('User', 'Site', 'Remove'));
 
-      $phpUnit::assertEquals($allowed, $acl->isAllowed('Moderator', 'Site', 'View'));
-      $phpUnit::assertEquals($allowed, $acl->isAllowed('Moderator', 'Site', 'Edit'));
-      $phpUnit::assertEquals($allowed, $acl->isAllowed('Moderator', 'Site', 'Remove'));
+      $phpUnit::assertSame($allowed, $acl->isAllowed('Moderator', 'Site', 'View'));
+      $phpUnit::assertSame($allowed, $acl->isAllowed('Moderator', 'Site', 'Edit'));
+      $phpUnit::assertSame($allowed, $acl->isAllowed('Moderator', 'Site', 'Remove'));
 
-      $phpUnit::assertEquals($allowed, $acl->isAllowed('Admin', 'Site', 'View'));
-      $phpUnit::assertEquals($allowed, $acl->isAllowed('Admin', 'Site', 'Edit'));
-      $phpUnit::assertEquals($allowed, $acl->isAllowed('Admin', 'Site', 'Remove'));
+      $phpUnit::assertSame($allowed, $acl->isAllowed('Admin', 'Site', 'View'));
+      $phpUnit::assertSame($allowed, $acl->isAllowed('Admin', 'Site', 'Edit'));
+      $phpUnit::assertSame($allowed, $acl->isAllowed('Admin', 'Site', 'Remove'));
     };
 
     $acl = new Acl;
@@ -501,7 +501,7 @@ class AclRuleApplyTest extends PHPUnit_Framework_TestCase
       }
       /** @noinspection PhpUnitTestsInspection */
       if ($index != 1) {
-        $self::assertEquals(count($expected), $index);
+        $self::assertSame(count($expected), $index);
       }
     };
 

@@ -50,7 +50,7 @@ class AclTest extends PHPUnit_Framework_TestCase
     $acl = new Acl;
     $acl->setRuleClass('SimpleAcl\Rule');
 
-    self::assertEquals('SimpleAcl\Rule', $acl->getRuleClass());
+    self::assertSame('SimpleAcl\Rule', $acl->getRuleClass());
   }
 
   public function testSetRuleNotExistingClass()
@@ -60,7 +60,7 @@ class AclTest extends PHPUnit_Framework_TestCase
     $acl = new Acl;
     $acl->setRuleClass('BadClassTest');
 
-    self::assertEquals('SimpleAcl\Rule', $acl->getRuleClass());
+    self::assertSame('SimpleAcl\Rule', $acl->getRuleClass());
   }
 
   public function testSetRuleNotInstanceOfRuleClass()
@@ -72,7 +72,7 @@ class AclTest extends PHPUnit_Framework_TestCase
     $acl = new Acl;
     $acl->setRuleClass('NotInstanceOfRuleClass');
 
-    self::assertEquals('SimpleAcl\Rule', $acl->getRuleClass());
+    self::assertSame('SimpleAcl\Rule', $acl->getRuleClass());
   }
 
   public function testSetRuleClass()
@@ -82,7 +82,7 @@ class AclTest extends PHPUnit_Framework_TestCase
     $acl = new Acl;
     $acl->setRuleClass('GoodRuleClass');
 
-    self::assertEquals('GoodRuleClass', $acl->getRuleClass());
+    self::assertSame('GoodRuleClass', $acl->getRuleClass());
   }
 
   public function testAddSameRules()

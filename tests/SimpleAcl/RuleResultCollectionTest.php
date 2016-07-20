@@ -47,7 +47,7 @@ class RuleResultCollectionTest extends PHPUnit_Framework_TestCase
       self::assertSame($result, $r);
       $index++;
     }
-    self::assertEquals(0, $index);
+    self::assertSame(0, $index);
   }
 
   public function testMultipleAdd()
@@ -72,7 +72,7 @@ class RuleResultCollectionTest extends PHPUnit_Framework_TestCase
       //self::assertSame($results[$index], $r);
       $index++;
     }
-    self::assertEquals(2, $index);
+    self::assertSame(2, $index);
   }
 
   public function testResultWithNullAction()

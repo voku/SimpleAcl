@@ -17,9 +17,9 @@ class RuleTest extends PHPUnit_Framework_TestCase
   public function testName()
   {
     $rule = new Rule('Rule');
-    self::assertEquals($rule->getName(), 'Rule');
+    self::assertSame($rule->getName(), 'Rule');
     $rule->setName('NewRuleName');
-    self::assertEquals($rule->getName(), 'NewRuleName');
+    self::assertSame($rule->getName(), 'NewRuleName');
   }
 
   public function testAction()
@@ -103,8 +103,8 @@ class RuleTest extends PHPUnit_Framework_TestCase
     $rule->setAction(
         function (RuleResult $r) use (&$isCalled, $self) {
           $isCalled = true;
-          $self::assertEquals('testNeedRoleName', $r->getNeedRoleName());
-          $self::assertEquals('testNeedResourceName', $r->getNeedResourceName());
+          $self::assertSame('testNeedRoleName', $r->getNeedRoleName());
+          $self::assertSame('testNeedResourceName', $r->getNeedResourceName());
 
           return true;
         }

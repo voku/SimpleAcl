@@ -25,9 +25,9 @@ class RuleResultTest extends PHPUnit_Framework_TestCase
     $result = new RuleResult($rule, 'testNeedRole', 'testNeedResource');
 
     self::assertSame($rule, $result->getRule());
-    self::assertEquals('testNeedRole', $result->getNeedRoleName());
-    self::assertEquals('testNeedResource', $result->getNeedResourceName());
-    self::assertEquals($rule->getAction($result), $result->getAction());
+    self::assertSame('testNeedRole', $result->getNeedRoleName());
+    self::assertSame('testNeedResource', $result->getNeedResourceName());
+    self::assertSame($rule->getAction($result), $result->getAction());
 
     self::assertSame($roleAggregate, $result->getRoleAggregate());
     self::assertSame($resourceAggregate, $result->getResourceAggregate());
