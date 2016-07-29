@@ -43,7 +43,7 @@ $view->setRole(new Role('User'));
 $view->setResource(new Resource('Page'));
 $view->setAction(true); // true means that we allow access
 
-var_dump((bool)$view->isAllowed('User', 'Page')); // true
+var_dump((bool)$view->isAllowed('View', 'User', 'Page')); // true
 ```
 
 ###### Add rules
@@ -112,7 +112,6 @@ $siteFrontend = new Resource('SiteFrontend');
 $acl->addRule($user, $siteFrontend, 'View', function (SimpleAcl\RuleResult $ruleResult) {
     echo $ruleResult->getNeedRoleName() . "\n";
     echo $ruleResult->getNeedResourceName() . "\n";
-    echo $ruleResult->getPriority() . "\n";
     echo $ruleResult->getRule()->getRole()->getName() . "\n";
     echo $ruleResult->getRule()->getResource()->getName() . "\n";
 
@@ -125,7 +124,6 @@ var_dump($acl->isAllowed('User', 'SiteFrontend', 'View')); // true
 // Outputs:
 // User
 // SiteFrontend
-// 0
 // User
 // SiteFrontend
 // bool(true)
