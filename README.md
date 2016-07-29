@@ -112,7 +112,6 @@ $siteFrontend = new Resource('SiteFrontend');
 $acl->addRule($user, $siteFrontend, 'View', function (SimpleAcl\RuleResult $ruleResult) {
     echo $ruleResult->getNeedRoleName() . "\n";
     echo $ruleResult->getNeedResourceName() . "\n";
-    echo $ruleResult->getPriority() . "\n";
     echo $ruleResult->getRule()->getRole()->getName() . "\n";
     echo $ruleResult->getRule()->getResource()->getName() . "\n";
 
