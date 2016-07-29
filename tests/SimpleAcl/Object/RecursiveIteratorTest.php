@@ -13,7 +13,7 @@ use SimpleAcl\Object\RecursiveIterator;
 class RecursiveIteratorTest extends PHPUnit_Framework_TestCase
 {
   /**
-   * @param $name
+   * @param mixed $name
    *
    * @return Object
    */

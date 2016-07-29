@@ -8,10 +8,11 @@ namespace SimpleAcl;
  */
 class RuleWide extends Rule
 {
+  /** @noinspection PhpMissingParentCallCommonInspection */
   /**
    * Wide rule always works.
    *
-   * @param $neeRuleName
+   * @param string $neeRuleName
    *
    * @return bool
    */

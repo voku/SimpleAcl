@@ -42,9 +42,9 @@ class RuleResult
   protected $isInit = false;
 
   /**
-   * @param Rule $rule
-   * @param      $needRoleName
-   * @param      $needResourceName
+   * @param Rule   $rule
+   * @param string $needRoleName
+   * @param string $needResourceName
    */
   public function __construct(Rule $rule, $needRoleName, $needResourceName)
   {

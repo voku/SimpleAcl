@@ -35,7 +35,7 @@ class ResourceAggregate extends ObjectAggregate implements ResourceAggregateInte
   /**
    * Remove resource by name.
    *
-   * @param $resourceName
+   * @param Object|string $resourceName
    */
   public function removeResource($resourceName)
   {
@@ -75,7 +75,7 @@ class ResourceAggregate extends ObjectAggregate implements ResourceAggregateInte
   /**
    * Return resource by name.
    *
-   * @param $resourceName
+   * @param Resource|string $resourceName
    *
    * @return null|Resource
    */

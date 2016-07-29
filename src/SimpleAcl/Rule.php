@@ -55,7 +55,7 @@ class Rule
   /**
    * Create Rule with given name.
    *
-   * @param $name
+   * @param string $name
    */
   public function __construct($name)
   {
@@ -66,8 +66,8 @@ class Rule
   /**
    * Set aggregate objects.
    *
-   * @param $roleAggregate
-   * @param $resourceAggregate
+   * @param RoleAggregateInterface|mixed     $roleAggregate
+   * @param ResourceAggregateInterface|mixed $resourceAggregate
    */
   public function resetAggregate($roleAggregate, $resourceAggregate)
   {
@@ -178,7 +178,7 @@ class Rule
    * Check owing Role & Resource and match its with $roleName & $resourceName;
    * if match was found depending on action allow or deny access to $resourceName for $roleName.
    *
-   * @param        $needRuleName
+   * @param string $needRuleName
    * @param string $needRoleName
    * @param string $needResourceName
    *
@@ -279,7 +279,7 @@ class Rule
   /**
    * Check if rule can be used.
    *
-   * @param $needRuleName
+   * @param string $needRuleName
    *
    * @return bool
    */

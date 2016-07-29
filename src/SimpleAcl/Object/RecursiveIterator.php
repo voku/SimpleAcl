@@ -2,7 +2,6 @@
 namespace SimpleAcl\Object;
 
 use RecursiveIterator as ArrayIterator;
-use SimpleAcl\Object;
 
 /**
  * Used to iterate by Roles and Resources hierarchy.
@@ -17,7 +16,7 @@ class RecursiveIterator implements ArrayIterator
   protected $objects = array();
 
   /**
-   * @param $objects
+   * @param Object[] $objects
    */
   public function __construct($objects)
   {

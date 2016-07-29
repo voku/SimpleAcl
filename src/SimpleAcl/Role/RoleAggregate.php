@@ -35,7 +35,7 @@ class RoleAggregate extends ObjectAggregate implements RoleAggregateInterface
   /**
    * Remove role by name.
    *
-   * @param $roleName
+   * @param Object|string $roleName
    */
   public function removeRole($roleName)
   {
@@ -75,7 +75,7 @@ class RoleAggregate extends ObjectAggregate implements RoleAggregateInterface
   /**
    * Return role by name.
    *
-   * @param $roleName
+   * @param Role|string $roleName
    *
    * @return null|Role
    */
