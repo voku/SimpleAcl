@@ -1,4 +1,5 @@
 <?php
+
 namespace SimpleAcl;
 
 use SimpleAcl\Exception\InvalidArgumentException;
@@ -18,7 +19,7 @@ class Acl
    *
    * @var Rule[]
    */
-  protected $rules = array();
+  protected $rules = [];
 
   /**
    * Class name used when rule created from string.
@@ -49,8 +50,8 @@ class Acl
    */
   public function addRule()
   {
-    $args = func_get_args();
-    $argsCount = count($args);
+    $args = \func_get_args();
+    $argsCount = \count($args);
 
     $role = null;
     $resource = null;
@@ -93,7 +94,7 @@ class Acl
       throw new InvalidArgumentException('Resource must be an instance of SimpleAcl\Resource or null');
     }
 
-    if (is_string($rule)) {
+    if (\is_string($rule)) {
       $ruleClass = $this->getRuleClass();
       $rule = new $ruleClass($rule);
     }
@@ -125,7 +126,7 @@ class Acl
    *
    * @return string
    */
-  public function getRuleClass()
+  public function getRuleClass(): string
   {
     return $this->ruleClass;
   }
@@ -135,7 +136,7 @@ class Acl
    *
    * @param string $ruleClass
    */
-  public function setRuleClass($ruleClass)
+  public function setRuleClass(string $ruleClass)
   {
     if (!class_exists($ruleClass)) {
       throw new RuntimeException('Rule class not exist');
@@ -155,9 +156,9 @@ class Acl
   /**
    * Return true if rule was already added.
    *
-   * @param Rule | mixed $needRule Rule or rule's id
+   * @param Rule|mixed $needRule Rule or rule's id
    *
-   * @return bool
+   * @return bool|Rule
    */
   public function hasRule($needRule)
   {
@@ -203,11 +204,11 @@ class Acl
   protected function isAllowedReturnResultSimple($roleAggregate, $resourceAggregate, $ruleName, $ruleResultCollection)
   {
     if (
-        is_string($ruleName)
+        \is_string($ruleName)
         &&
-        is_string($roleAggregate)
+        \is_string($roleAggregate)
         &&
-        is_string($resourceAggregate)
+        \is_string($resourceAggregate)
     ) {
 
       foreach ($this->rules as $ruleTmp) {
@@ -235,7 +236,7 @@ class Acl
         ) {
           $resultTmp = $ruleTmp->isAllowed($ruleName, $roleAggregate, $resourceAggregate);
 
-          if (null === $resultTmp->getAction()) {
+          if ($resultTmp && null === $resultTmp->getAction()) {
             unset($resultTmp);
           } else {
             // Set null if rule don't match any role or resource.
@@ -276,7 +277,7 @@ class Acl
         foreach ($this->rules as $rule) {
 
           if (
-              is_string($ruleName)
+              \is_string($ruleName)
               &&
               !is_subclass_of($rule, 'SimpleAcl\Rule')
               &&
@@ -305,17 +306,21 @@ class Acl
    *
    * @return array
    */
-  protected function getNames($object)
+  protected function getNames($object): array
   {
-    if (is_string($object) || null === $object) {
-      return array($object);
-    } elseif ($object instanceof RoleAggregateInterface) {
+    if (\is_string($object) || null === $object) {
+      return [$object];
+    }
+
+    if ($object instanceof RoleAggregateInterface) {
       return $object->getRolesNames();
-    } elseif ($object instanceof ResourceAggregateInterface) {
+    }
+
+    if ($object instanceof ResourceAggregateInterface) {
       return $object->getResourcesNames();
     }
 
-    return array();
+    return [];
   }
 
   /**
@@ -326,7 +331,7 @@ class Acl
    * @param null|string $ruleName
    * @param bool        $all
    */
-  public function removeRule($roleName = null, $resourceName = null, $ruleName = null, $all = true)
+  public function removeRule($roleName = null, $resourceName = null, $ruleName = null, bool $all = true)
   {
     if (
         null === $roleName
@@ -358,7 +363,9 @@ class Acl
               (
                   $roleName !== null
                   &&
-                  $rule->getRole() && $rule->getRole()->getName() === $roleName
+                  $rule->getRole()
+                  &&
+                  $rule->getRole()->getName() === $roleName
               )
           )
           &&
@@ -386,11 +393,10 @@ class Acl
 
   /**
    * Remove all rules.
-   *
    */
   public function removeAllRules()
   {
-    $this->rules = array();
+    $this->rules = [];
   }
 
   /**

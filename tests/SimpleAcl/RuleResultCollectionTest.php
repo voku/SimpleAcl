@@ -1,7 +1,8 @@
 <?php
+
 namespace SimpleAclTest;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use SimpleAcl\Rule;
 use SimpleAcl\RuleResult;
 use SimpleAcl\RuleResultCollection;
@@ -11,7 +12,7 @@ use SimpleAcl\RuleResultCollection;
  *
  * @package SimpleAclTest
  */
-class RuleResultCollectionTest extends PHPUnit_Framework_TestCase
+class RuleResultCollectionTest extends TestCase
 {
   public function testEmpty()
   {
@@ -65,7 +66,7 @@ class RuleResultCollectionTest extends PHPUnit_Framework_TestCase
 
     self::assertTrue($collection->any());
 
-    $results = array($result2, $result);
+    $results = [$result2, $result];
 
     $index = 0;
     foreach ($collection as $r) {

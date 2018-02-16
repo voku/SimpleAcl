@@ -1,4 +1,5 @@
 <?php
+
 namespace SimpleAcl\Exception;
 
 use RuntimeException as SplException;

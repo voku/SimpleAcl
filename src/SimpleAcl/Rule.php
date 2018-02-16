@@ -1,4 +1,5 @@
 <?php
+
 namespace SimpleAcl;
 
 use SimpleAcl\Resource\ResourceAggregateInterface;
@@ -14,7 +15,7 @@ class Rule
   /**
    * Holds rule id.
    *
-   * @var mixed
+   * @var null|int
    */
   public $id;
 
@@ -87,7 +88,7 @@ class Rule
   /**
    * @return ResourceAggregateInterface
    */
-  public function getResourceAggregate()
+  public function getResourceAggregate(): ResourceAggregateInterface
   {
     return $this->resourceAggregate;
   }
@@ -103,7 +104,7 @@ class Rule
   /**
    * @return RoleAggregateInterface
    */
-  public function getRoleAggregate()
+  public function getRoleAggregate(): RoleAggregateInterface
   {
     return $this->roleAggregate;
   }
@@ -117,7 +118,7 @@ class Rule
   }
 
   /**
-   * @return mixed
+   * @return null|int
    */
   public function getId()
   {
@@ -125,9 +126,9 @@ class Rule
   }
 
   /**
-   * @param mixed $id
+   * @param int|null $id
    */
-  public function setId($id = null)
+  public function setId(int $id = null)
   {
     if (null === $id) {
       $id = $this->generateId();
@@ -148,22 +149,22 @@ class Rule
     if (
         null === $ruleResult
         ||
-        !is_callable($actionResult)
+        !\is_callable($actionResult)
     ) {
       if (null !== $actionResult) {
         return (bool)$actionResult;
-      } else {
-        return null;
       }
+
+      return null;
     }
 
-    $actionResult = call_user_func($this->action, $ruleResult);
+    $actionResult = \call_user_func($this->action, $ruleResult);
 
     if (null !== $actionResult) {
       return (bool)$actionResult;
-    } else {
-      return null;
     }
+
+    return null;
   }
 
   /**
@@ -178,17 +179,17 @@ class Rule
    * Check owing Role & Resource and match its with $roleName & $resourceName;
    * if match was found depending on action allow or deny access to $resourceName for $roleName.
    *
-   * @param string $needRuleName
-   * @param string $needRoleName
-   * @param string $needResourceName
+   * @param string|null $needRuleName
+   * @param string|null $needRoleName
+   * @param string|null $needResourceName
    *
    * @return RuleResult|null null is returned if there is no matched Role & Resource in this rule.
    *                         RuleResult otherwise.
    */
   public function isAllowed($needRuleName, $needRoleName, $needResourceName)
   {
-    static $roleCache = array();
-    static $resourceCache = array();
+    static $roleCache = [];
+    static $resourceCache = [];
 
     if (
         (
@@ -213,7 +214,7 @@ class Rule
         }
 
       } else {
-        $roles = array(null);
+        $roles = [null];
       }
 
       if (null !== $this->resource) {
@@ -229,7 +230,7 @@ class Rule
         }
 
       } else {
-        $resources = array(null);
+        $resources = [null];
       }
 
       foreach ($roles as $role) {
@@ -279,11 +280,11 @@ class Rule
   /**
    * Check if rule can be used.
    *
-   * @param string $needRuleName
+   * @param string|null $needRuleName
    *
    * @return bool
    */
-  protected function isRuleMatched($needRuleName)
+  protected function isRuleMatched($needRuleName): bool
   {
     return $this->name === $needRuleName;
   }
@@ -291,7 +292,7 @@ class Rule
   /**
    * @return string
    */
-  public function getName()
+  public function getName(): string
   {
     return $this->name;
   }
@@ -299,13 +300,13 @@ class Rule
   /**
    * @param string $name
    */
-  public function setName($name)
+  public function setName(string $name)
   {
     $this->name = $name;
   }
 
   /**
-   * @return Role
+   * @return Role|null
    */
   public function getRole()
   {
@@ -321,7 +322,7 @@ class Rule
   }
 
   /**
-   * @return \SimpleAcl\Resource
+   * @return \SimpleAcl\Resource|null
    */
   public function getResource()
   {
@@ -339,9 +340,9 @@ class Rule
   /**
    * Creates an id for rule.
    *
-   * @return string
+   * @return int
    */
-  protected function generateId()
+  protected function generateId(): int
   {
     static $idCountRuleSimpleAcl = 1;
 

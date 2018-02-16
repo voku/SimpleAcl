@@ -1,4 +1,5 @@
 <?php
+
 namespace SimpleAcl\Resource;
 
 use SimpleAcl\Object\ObjectAggregate;
@@ -67,7 +68,7 @@ class ResourceAggregate extends ObjectAggregate implements ResourceAggregateInte
    *
    * @return array
    */
-  public function getResourcesNames()
+  public function getResourcesNames(): array
   {
     return parent::getObjectNames();
   }

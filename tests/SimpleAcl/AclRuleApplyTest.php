@@ -1,7 +1,8 @@
 <?php
+
 namespace SimpleAclTest;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use SimpleAcl\Acl;
 use SimpleAcl\Resource;
 use SimpleAcl\Resource\ResourceAggregate;
@@ -16,7 +17,7 @@ use SimpleAcl\RuleWide;
  *
  * @package SimpleAclTest
  */
-class AclRuleApplyTest extends PHPUnit_Framework_TestCase
+class AclRuleApplyTest extends TestCase
 {
   public function testEmpty()
   {
@@ -85,7 +86,7 @@ class AclRuleApplyTest extends PHPUnit_Framework_TestCase
 
   public function testMultipleRolesMultipleResourcesMultipleRules()
   {
-    $runChecks = function (PHPUnit_Framework_TestCase $phpUnit, Acl $acl, $allowed) {
+    $runChecks = function (TestCase $phpUnit, Acl $acl, $allowed) {
       // Checks for page
       $phpUnit::assertSame($allowed, $acl->isAllowed('User', 'Page', 'View'));
       $phpUnit::assertSame($allowed, $acl->isAllowed('User', 'Page', 'Edit'));
@@ -190,7 +191,7 @@ class AclRuleApplyTest extends PHPUnit_Framework_TestCase
     $admin = new Role('Admin');
 
     $page = new Resource('Page');
-    
+
     $acl->addRule($user, $page, new Rule('View'), true);
 
     self::assertTrue($acl->isAllowed('User', 'Page', 'View'));
@@ -198,9 +199,9 @@ class AclRuleApplyTest extends PHPUnit_Framework_TestCase
     self::assertFalse($acl->isAllowed('Admin', 'Page', 'View'));
 
     $acl = new Acl;
-    
+
     $acl->addRule($admin, $page, new Rule('View'), true);
-    
+
     self::assertTrue($acl->isAllowed('Admin', 'Page', 'View'));
 
     // but last added rules wins
@@ -221,7 +222,7 @@ class AclRuleApplyTest extends PHPUnit_Framework_TestCase
     $page = new Resource('Page');
     $blog = new Resource('Blog');
     $site = new Resource('Site');
-    
+
     $acl->addRule($user, $page, new Rule('View'), true);
 
     self::assertTrue($acl->isAllowed('User', 'Page', 'View'));
@@ -229,7 +230,7 @@ class AclRuleApplyTest extends PHPUnit_Framework_TestCase
     self::assertFalse($acl->isAllowed('User', 'Site', 'View'));
 
     $acl = new Acl;
-    
+
     $acl->addRule($user, $site, new Rule('View'), true);
 
     // but last added rules wins
@@ -501,7 +502,7 @@ class AclRuleApplyTest extends PHPUnit_Framework_TestCase
       }
       /** @noinspection PhpUnitTestsInspection */
       if ($index != 1) {
-        $self::assertSame(count($expected), $index);
+        $self::assertSame(\count($expected), $index);
       }
     };
 
@@ -522,9 +523,9 @@ class AclRuleApplyTest extends PHPUnit_Framework_TestCase
     self::assertTrue($acl->isAllowed('User', 'Page', 'Edit'));
     self::assertTrue($acl->isAllowed('User', 'Page', 'Remove'));
 
-    $testReturnResult($acl->isAllowedReturnResult('User', 'Page', 'View'), array($view));
-    $testReturnResult($acl->isAllowedReturnResult('User', 'Page', 'Edit'), array($edit));
-    $testReturnResult($acl->isAllowedReturnResult('User', 'Page', 'Remove'), array($remove));
+    $testReturnResult($acl->isAllowedReturnResult('User', 'Page', 'View'), [$view]);
+    $testReturnResult($acl->isAllowedReturnResult('User', 'Page', 'Edit'), [$edit]);
+    $testReturnResult($acl->isAllowedReturnResult('User', 'Page', 'Remove'), [$remove]);
 
     $acl = new Acl;
 
@@ -536,9 +537,9 @@ class AclRuleApplyTest extends PHPUnit_Framework_TestCase
     self::assertFalse($acl->isAllowed('User', 'Page', 'Edit'));
     self::assertFalse($acl->isAllowed('User', 'Page', 'Remove'));
 
-    $testReturnResult($acl->isAllowedReturnResult('User', 'Page', 'View'), array($view));
-    $testReturnResult($acl->isAllowedReturnResult('User', 'Page', 'Edit'), array($edit));
-    $testReturnResult($acl->isAllowedReturnResult('User', 'Page', 'Remove'), array($remove));
+    $testReturnResult($acl->isAllowedReturnResult('User', 'Page', 'View'), [$view]);
+    $testReturnResult($acl->isAllowedReturnResult('User', 'Page', 'Edit'), [$edit]);
+    $testReturnResult($acl->isAllowedReturnResult('User', 'Page', 'Remove'), [$remove]);
 
     // test RuleResult order
     $acl = new Acl;
@@ -556,13 +557,13 @@ class AclRuleApplyTest extends PHPUnit_Framework_TestCase
 
     $testReturnResult(
         $acl->isAllowedReturnResult('User', 'Page', 'View'),
-        array(
+        [
             $view4,
             $view3,
             $view2,
             $view1,
             $view,
-        )
+        ]
     );
   }
 
@@ -627,8 +628,8 @@ class AclRuleApplyTest extends PHPUnit_Framework_TestCase
 
     $rule->setAction(
         function (RuleResult $r) use ($self) {
-//          $self::assertNull($r->getRoleAggregate());
-//          $self::assertNull($r->getResourceAggregate());
+          //          $self::assertNull($r->getRoleAggregate());
+          //          $self::assertNull($r->getResourceAggregate());
 
           return true;
         }

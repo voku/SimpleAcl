@@ -1,7 +1,8 @@
 <?php
+
 namespace SimpleAclTest;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use SimpleAcl\Acl;
 use SimpleAcl\Resource;
 use SimpleAcl\Role;
@@ -12,18 +13,22 @@ use SimpleAcl\Rule;
  *
  * @package SimpleAclTest
  */
-class AclTest extends PHPUnit_Framework_TestCase
+class AclTest extends TestCase
 {
   public function testThrowsExceptionWhenBadRule()
   {
+    $this->expectException('SimpleAcl\Exception\InvalidArgumentException');
+    $this->expectExceptionMessage('SimpleAcl\Rule or string');
+
+
     $acl = new Acl;
-    $this->setExpectedException('SimpleAcl\Exception\InvalidArgumentException', 'SimpleAcl\Rule or string');
     $acl->addRule(new Role('User'), new Resource('Page'), new \stdClass(), true);
   }
 
   public function testThrowsExceptionWhenBadArgumentsCount()
   {
-    $this->setExpectedException('SimpleAcl\Exception\InvalidArgumentException', 'accepts only one, tow, three or four arguments');
+    $this->expectException('SimpleAcl\Exception\InvalidArgumentException');
+    $this->expectExceptionMessage('accepts only one, tow, three or four arguments');
 
     $acl = new Acl;
     $acl->addRule(new Role(1), new Resource(1), new Rule(1), true, 'test');
@@ -31,7 +36,8 @@ class AclTest extends PHPUnit_Framework_TestCase
 
   public function testThrowsExceptionWhenBadRole()
   {
-    $this->setExpectedException('SimpleAcl\Exception\InvalidArgumentException', 'Role must be an instance of SimpleAcl\Role or null');
+    $this->expectException('SimpleAcl\Exception\InvalidArgumentException');
+    $this->expectExceptionMessage('Role must be an instance of SimpleAcl\Role or null');
 
     $acl = new Acl;
     $acl->addRule(new \stdClass(1), new Resource('test'), new Rule('test'), true);
@@ -39,7 +45,8 @@ class AclTest extends PHPUnit_Framework_TestCase
 
   public function testThrowsExceptionWhenBadResource()
   {
-    $this->setExpectedException('SimpleAcl\Exception\InvalidArgumentException', 'Resource must be an instance of SimpleAcl\Resource or null');
+    $this->expectException('SimpleAcl\Exception\InvalidArgumentException');
+    $this->expectExceptionMessage('Resource must be an instance of SimpleAcl\Resource or null');
 
     $acl = new Acl;
     $acl->addRule(new Role('test'), new \stdClass(1), new Rule('test'), true);
@@ -55,7 +62,8 @@ class AclTest extends PHPUnit_Framework_TestCase
 
   public function testSetRuleNotExistingClass()
   {
-    $this->setExpectedException('SimpleAcl\Exception\RuntimeException', 'Rule class not exist');
+    $this->expectException('SimpleAcl\Exception\RuntimeException');
+    $this->expectExceptionMessage('Rule class not exist');
 
     $acl = new Acl;
     $acl->setRuleClass('BadClassTest');
@@ -65,7 +73,8 @@ class AclTest extends PHPUnit_Framework_TestCase
 
   public function testSetRuleNotInstanceOfRuleClass()
   {
-    $this->setExpectedException('SimpleAcl\Exception\RuntimeException', 'Rule class must be instance of SimpleAcl\Rule');
+    $this->expectException('SimpleAcl\Exception\RuntimeException');
+    $this->expectExceptionMessage('Rule class must be instance of SimpleAcl\Rule');
 
     eval('class NotInstanceOfRuleClass {}');
 

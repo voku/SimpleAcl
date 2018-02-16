@@ -1,20 +1,21 @@
 <?php
+
 namespace SimpleAclTest;
 
-use PHPUnit_Framework_TestCase;
-use SimpleAcl\Object;
+use PHPUnit\Framework\TestCase;
+use SimpleAcl\BaseObject;
 
 /**
  * Class ObjectTest
  *
  * @package SimpleAclTest
  */
-class ObjectTest extends PHPUnit_Framework_TestCase
+class ObjectTest extends TestCase
 {
   public function testName()
   {
-    /** @var Object $object */
-    $object = $this->getMockForAbstractClass('SimpleAcl\Object', array('TestName'));
+    /** @var BaseObject $object */
+    $object = $this->getMockForAbstractClass('SimpleAcl\BaseObject', ['TestName']);
 
     self::assertSame($object->getName(), 'TestName');
     $object->setName('NewName');

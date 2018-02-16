@@ -1,4 +1,5 @@
 <?php
+
 namespace SimpleAcl\Role;
 
 use SimpleAcl\Object\ObjectAggregate;
@@ -25,7 +26,6 @@ class RoleAggregate extends ObjectAggregate implements RoleAggregateInterface
 
   /**
    * Remove all roles.
-   *
    */
   public function removeRoles()
   {
@@ -67,7 +67,7 @@ class RoleAggregate extends ObjectAggregate implements RoleAggregateInterface
    *
    * @return array
    */
-  public function getRolesNames()
+  public function getRolesNames(): array
   {
     return parent::getObjectNames();
   }

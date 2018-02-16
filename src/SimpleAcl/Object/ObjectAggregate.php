@@ -1,7 +1,8 @@
 <?php
+
 namespace SimpleAcl\Object;
 
-use SimpleAcl\Object;
+use SimpleAcl\BaseObject;
 
 /**
  * Implement common function for Role and Resources.
@@ -11,23 +12,23 @@ use SimpleAcl\Object;
 abstract class ObjectAggregate
 {
   /**
-   * @var Object[]
+   * @var BaseObject[]
    */
-  protected $objects = array();
+  protected $objects = [];
 
   protected function removeObjects()
   {
-    $this->objects = array();
+    $this->objects = [];
   }
 
   /**
-   * @param Object|string $objectName
+   * @param BaseObject|string $objectName
    *
    * @return bool
    */
   protected function removeObject($objectName)
   {
-    if ($objectName instanceof Object) {
+    if ($objectName instanceof BaseObject) {
       $objectName = $objectName->getName();
     }
 
@@ -43,7 +44,7 @@ abstract class ObjectAggregate
   }
 
   /**
-   * @return array|Object[]
+   * @return array|BaseObject[]
    */
   protected function getObjects()
   {
@@ -55,16 +56,16 @@ abstract class ObjectAggregate
    */
   protected function setObjects($objects)
   {
-    /** @var \SimpleAcl\Object $object */
+    /** @var \SimpleAcl\BaseObject $object */
     foreach ($objects as $object) {
       $this->addObject($object);
     }
   }
 
   /**
-   * @param \SimpleAcl\Object $object
+   * @param \SimpleAcl\BaseObject $object
    */
-  protected function addObject(Object $object)
+  protected function addObject(BaseObject $object)
   {
     if ($this->getObject($object)) {
       return;
@@ -74,13 +75,13 @@ abstract class ObjectAggregate
   }
 
   /**
-   * @param Object|string $objectName
+   * @param BaseObject|string $objectName
    *
-   * @return null|Object
+   * @return null|BaseObject
    */
   protected function getObject($objectName)
   {
-    if ($objectName instanceof Object) {
+    if ($objectName instanceof BaseObject) {
       $objectName = $objectName->getName();
     }
 
@@ -96,9 +97,9 @@ abstract class ObjectAggregate
   /**
    * @return array
    */
-  protected function getObjectNames()
+  protected function getObjectNames(): array
   {
-    $names = array();
+    $names = [];
 
     foreach ($this->objects as $object) {
       $names[] = $object->getName();

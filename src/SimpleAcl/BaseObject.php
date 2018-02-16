@@ -1,4 +1,5 @@
 <?php
+
 namespace SimpleAcl;
 
 use IteratorAggregate;
@@ -9,7 +10,7 @@ use SimpleAcl\Object\RecursiveIterator;
  *
  * @package SimpleAcl
  */
-abstract class Object implements IteratorAggregate
+abstract class BaseObject implements IteratorAggregate
 {
   /**
    * Hold the name of object.
@@ -23,7 +24,7 @@ abstract class Object implements IteratorAggregate
    *
    * @param string $name
    */
-  public function __construct($name)
+  public function __construct(string $name)
   {
     $this->setName($name);
   }
@@ -31,15 +32,15 @@ abstract class Object implements IteratorAggregate
   /**
    * @return RecursiveIterator
    */
-  public function getIterator()
+  public function getIterator(): RecursiveIterator
   {
-    return new RecursiveIterator(array($this));
+    return new RecursiveIterator([$this]);
   }
 
   /**
    * @return string
    */
-  public function getName()
+  public function getName(): string
   {
     return $this->name;
   }
@@ -47,7 +48,7 @@ abstract class Object implements IteratorAggregate
   /**
    * @param string $name
    */
-  public function setName($name)
+  public function setName(string $name)
   {
     $this->name = $name;
   }

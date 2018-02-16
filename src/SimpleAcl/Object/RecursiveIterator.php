@@ -1,4 +1,5 @@
 <?php
+
 namespace SimpleAcl\Object;
 
 use RecursiveIterator as ArrayIterator;
@@ -13,7 +14,7 @@ class RecursiveIterator implements ArrayIterator
   /**
    * @var Object[]
    */
-  protected $objects = array();
+  protected $objects = [];
 
   /**
    * @param Object[] $objects

@@ -1,4 +1,5 @@
 <?php
+
 namespace SimpleAcl;
 
 use SimpleAcl\Resource\ResourceAggregateInterface;
@@ -27,12 +28,12 @@ class RuleResult
   protected $needResourceName;
 
   /**
-   * @var string
+   * @var int
    */
   protected $id;
 
   /**
-   * @var
+   * @var mixed
    */
   protected $action;
 
@@ -42,9 +43,9 @@ class RuleResult
   protected $isInit = false;
 
   /**
-   * @param Rule   $rule
-   * @param string $needRoleName
-   * @param string $needResourceName
+   * @param Rule        $rule
+   * @param string|null $needRoleName
+   * @param string|null $needResourceName
    */
   public function __construct(Rule $rule, $needRoleName, $needResourceName)
   {
@@ -59,7 +60,7 @@ class RuleResult
   /**
    * @return string
    */
-  public function getNeedResourceName()
+  public function getNeedResourceName(): string
   {
     return $this->needResourceName;
   }
@@ -67,7 +68,7 @@ class RuleResult
   /**
    * @return string
    */
-  public function getNeedRoleName()
+  public function getNeedRoleName(): string
   {
     return $this->needRoleName;
   }
@@ -75,13 +76,13 @@ class RuleResult
   /**
    * @return Rule
    */
-  public function getRule()
+  public function getRule(): Rule
   {
     return $this->rule;
   }
 
   /**
-   * @return bool
+   * @return mixed
    */
   public function getAction()
   {
@@ -94,9 +95,9 @@ class RuleResult
   }
 
   /**
-   * @return string
+   * @return int
    */
-  public function getId()
+  public function getId(): int
   {
     return $this->id;
   }
@@ -104,7 +105,7 @@ class RuleResult
   /**
    * @return ResourceAggregateInterface
    */
-  public function getResourceAggregate()
+  public function getResourceAggregate(): ResourceAggregateInterface
   {
     return $this->getRule()->getResourceAggregate();
   }
@@ -112,7 +113,7 @@ class RuleResult
   /**
    * @return RoleAggregateInterface
    */
-  public function getRoleAggregate()
+  public function getRoleAggregate(): RoleAggregateInterface
   {
     return $this->getRule()->getRoleAggregate();
   }

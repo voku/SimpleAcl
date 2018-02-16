@@ -1,7 +1,8 @@
 <?php
+
 namespace SimpleAclTest;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use SimpleAcl\Resource;
 use SimpleAcl\Role;
 use SimpleAcl\Rule;
@@ -12,7 +13,7 @@ use SimpleAcl\RuleResult;
  *
  * @package SimpleAclTest
  */
-class RuleTest extends PHPUnit_Framework_TestCase
+class RuleTest extends TestCase
 {
   public function testName()
   {
@@ -36,13 +37,13 @@ class RuleTest extends PHPUnit_Framework_TestCase
     self::assertFalse($rule->getAction());
 
     // Action can be mixed, but getAction must return bool
-    $a = array();
+    $a = [];
     $rule->setAction($a);
     self::assertFalse($rule->getAction($ruleResult));
     self::assertFalse($rule->getAction());
     self::assertAttributeEquals($a, 'action', $rule);
 
-    $a = array(1, 2, 3);
+    $a = [1, 2, 3];
     $rule->setAction($a);
     self::assertTrue($rule->getAction($ruleResult));
     self::assertTrue($rule->getAction());

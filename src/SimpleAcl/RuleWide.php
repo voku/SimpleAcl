@@ -1,4 +1,5 @@
 <?php
+
 namespace SimpleAcl;
 
 /**
@@ -8,15 +9,14 @@ namespace SimpleAcl;
  */
 class RuleWide extends Rule
 {
-  /** @noinspection PhpMissingParentCallCommonInspection */
   /**
    * Wide rule always works.
    *
-   * @param string $neeRuleName
+   * @param string|null $neeRuleName
    *
    * @return bool
    */
-  protected function isRuleMatched($neeRuleName)
+  protected function isRuleMatched($neeRuleName): bool
   {
     return true;
   }

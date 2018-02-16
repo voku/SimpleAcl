@@ -1,4 +1,5 @@
 <?php
+
 namespace SimpleAcl;
 
 use IteratorAggregate;
@@ -20,13 +21,13 @@ class RuleResultCollection implements IteratorAggregate
    */
   public function __construct()
   {
-    $this->collection = array();
+    $this->collection = [];
   }
 
   /**
-   * @return array
+   * @return \ArrayIterator
    */
-  public function getIterator()
+  public function getIterator(): \ArrayIterator
   {
     return new \ArrayIterator($this->collection);
   }
@@ -48,7 +49,7 @@ class RuleResultCollection implements IteratorAggregate
   }
 
   /**
-   * @return bool
+   * @return bool|mixed
    */
   public function get()
   {
@@ -65,8 +66,8 @@ class RuleResultCollection implements IteratorAggregate
   /**
    * @return bool
    */
-  public function any()
+  public function any(): bool
   {
-    return count($this->collection) > 0;
+    return \count($this->collection) > 0;
   }
 }

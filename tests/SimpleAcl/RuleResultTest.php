@@ -1,7 +1,8 @@
 <?php
+
 namespace SimpleAclTest;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use SimpleAcl\Rule;
 use SimpleAcl\RuleResult;
 
@@ -10,12 +11,12 @@ use SimpleAcl\RuleResult;
  *
  * @package SimpleAclTest
  */
-class RuleResultTest extends PHPUnit_Framework_TestCase
+class RuleResultTest extends TestCase
 {
   public function testRuleResult()
   {
-    $roleAggregate = $this->getMock('SimpleAcl\Role\RoleAggregateInterface');
-    $resourceAggregate = $this->getMock('SimpleAcl\Resource\ResourceAggregateInterface');
+    $roleAggregate = $this->createMock('SimpleAcl\Role\RoleAggregateInterface');
+    $resourceAggregate = $this->createMock('SimpleAcl\Resource\ResourceAggregateInterface');
 
     $rule = new Rule('Test');
 
