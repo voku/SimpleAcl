@@ -1,3 +1,13 @@
+7.0.x
+
+    - drop support for PHP < 7.0
+    - use "strict_types"
+
+6.0.x
+
+    - removed last added-rule wins -> add only rules that you need
+    - removed priority for rules -> performance was far too bad ...
+
 5.0.x
 
     - removed "RuleResult->priority" via "SplPriorityQueue" (because of very poor performance)
